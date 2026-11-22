@@ -115,6 +115,7 @@ class SetupMainWindow(QMainWindow):
         self.tabs.addTab(self.tab_missions, 'Missões')
         self.tabs.addTab(self.tab_map, 'Mapa')
         self.tabs.currentChanged.connect(self._on_tab_changed)
+        self.tab_summary.navigate_requested.connect(self._on_summary_navigate)
         root_layout.addWidget(self.tabs, 1)
 
         self.setStatusBar(QStatusBar())
@@ -161,6 +162,16 @@ class SetupMainWindow(QMainWindow):
     def _on_tab_changed(self, index: int) -> None:
         if self.tabs.widget(index) is self.tab_summary:
             self.tab_summary.load_package(self._pkg)
+
+    def _on_summary_navigate(self, target: str) -> None:
+        mapping = {
+            'missions': self.tab_missions,
+            'characters': self.tab_characters,
+            'items': self.tab_items,
+        }
+        widget = mapping.get(target)
+        if widget is not None:
+            self.tabs.setCurrentWidget(widget)
 
     def _load_story(self, story_id: str | None) -> None:
         if not story_id:

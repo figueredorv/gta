@@ -5,7 +5,9 @@ from pathlib import Path
 
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 
+from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QImage
+from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication
 
 from setup.core.models import (
@@ -122,6 +124,19 @@ class SummaryTabTests(unittest.TestCase):
                 win.tab_story.title_edit.setText('Título Atualizado Teste')
                 win.tabs.setCurrentWidget(win.tab_summary)
                 self.assertEqual(win.tab_summary.title_label.text(), 'Título Atualizado Teste')
+
+            # Clicar nos painéis de contadores abre a aba correspondente
+            win.tabs.setCurrentWidget(win.tab_summary)
+            QTest.mouseClick(win.tab_summary.missions_card, Qt.MouseButton.LeftButton)
+            self.assertIs(win.tabs.currentWidget(), win.tab_missions)
+
+            win.tabs.setCurrentWidget(win.tab_summary)
+            QTest.mouseClick(win.tab_summary.characters_card, Qt.MouseButton.LeftButton)
+            self.assertIs(win.tabs.currentWidget(), win.tab_characters)
+
+            win.tabs.setCurrentWidget(win.tab_summary)
+            QTest.mouseClick(win.tab_summary.items_card, Qt.MouseButton.LeftButton)
+            self.assertIs(win.tabs.currentWidget(), win.tab_items)
         finally:
             win.close()
 

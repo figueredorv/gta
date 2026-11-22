@@ -3,7 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QMouseEvent
 from PySide6.QtWidgets import (
     QFrame,
     QHBoxLayout,
@@ -37,18 +38,27 @@ def count_used_items(pkg: StoryPackage | None) -> tuple[int, int]:
 
 
 class _MetricCard(QFrame):
-    """Card de indicador numérico com faixa de destaque na aba Resumo."""
+    """Card de indicador numérico clicável com faixa de destaque na aba Resumo."""
+
+    clicked = Signal()
 
     def __init__(self, label: str, accent_color: str = '#f59e0b', parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.setObjectName('SummaryMetricCard')
         self.setMinimumHeight(132)
+        self.setMinimumWidth(0)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.setToolTip(f'Clique para abrir a aba {label}')
         self.setStyleSheet(
             f'QFrame#SummaryMetricCard {{'
             f'  background-color: #1c212e;'
             f'  border: 1px solid #2b3245;'
             f'  border-top: 3px solid {accent_color};'
             f'  border-radius: 10px;'
+            f'}}'
+            f'QFrame#SummaryMetricCard:hover {{'
+            f'  background-color: #23293a;'
+            f'  border-color: {accent_color};'
             f'}}'
         )
         layout = QVBoxLayout(self)
@@ -76,9 +86,18 @@ class _MetricCard(QFrame):
         self.value_label.setText(str(value))
         self.sub_label.setText(subtitle)
 
+    def mousePressEvent(self, event: QMouseEvent) -> None:
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.clicked.emit()
+            event.accept()
+            return
+        super().mousePressEvent(event)
+
 
 class StorySummaryTab(QWidget):
     """Aba inicial de visão geral da história carregada."""
+
+    navigate_requested = Signal(str)
 
     def __init__(
         self,
@@ -174,6 +193,9 @@ class StorySummaryTab(QWidget):
         self.missions_card = _MetricCard('Missões', accent_color='#f59e0b', parent=content)
         self.characters_card = _MetricCard('Personagens', accent_color='#38bdf8', parent=content)
         self.items_card = _MetricCard('Itens usados na história', accent_color='#22c55e', parent=content)
+        self.missions_card.clicked.connect(lambda: self.navigate_requested.emit('missions'))
+        self.characters_card.clicked.connect(lambda: self.navigate_requested.emit('characters'))
+        self.items_card.clicked.connect(lambda: self.navigate_requested.emit('items'))
         metrics_row.addWidget(self.missions_card, 1)
         metrics_row.addWidget(self.characters_card, 1)
         metrics_row.addWidget(self.items_card, 1)
