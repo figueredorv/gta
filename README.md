@@ -14,7 +14,7 @@
 
 <p align="center">
   <a href="https://gustavoguanabara.github.io/gta/" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/JOGUE_GTA_AGORA-f59e0b?style=for-the-badge" alt="JOGUE GTA AGORA" height="44">
+    <img src="./btn-jogue-gta.png" alt="JOGUE GTA AGORA" width="360">
   </a>
 </p>
 
