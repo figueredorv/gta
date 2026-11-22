@@ -37,33 +37,38 @@ def count_used_items(pkg: StoryPackage | None) -> tuple[int, int]:
 
 
 class _MetricCard(QFrame):
-    """Card compacto de indicador numérico na aba Resumo."""
+    """Card de indicador numérico com faixa de destaque na aba Resumo."""
 
-    def __init__(self, label: str, parent: QWidget | None = None) -> None:
+    def __init__(self, label: str, accent_color: str = '#f59e0b', parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.setObjectName('SummaryMetricCard')
+        self.setMinimumHeight(132)
         self.setStyleSheet(
-            'QFrame#SummaryMetricCard {'
-            '  background-color: #1c212e;'
-            '  border: 1px solid #2b3245;'
-            '  border-radius: 8px;'
-            '  padding: 10px 14px;'
-            '}'
+            f'QFrame#SummaryMetricCard {{'
+            f'  background-color: #1c212e;'
+            f'  border: 1px solid #2b3245;'
+            f'  border-top: 3px solid {accent_color};'
+            f'  border-radius: 10px;'
+            f'}}'
         )
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(12, 10, 12, 10)
-        layout.setSpacing(2)
+        layout.setContentsMargins(18, 16, 18, 16)
+        layout.setSpacing(6)
 
         self.value_label = QLabel('0', self)
-        self.value_label.setStyleSheet('font-size: 24px; font-weight: 700; color: #f59e0b; background: transparent;')
+        self.value_label.setStyleSheet(
+            f'font-size: 34px; font-weight: 800; color: {accent_color}; background: transparent;'
+        )
         self.title_label = QLabel(label, self)
-        self.title_label.setStyleSheet('font-size: 13px; font-weight: 600; color: #f4f5f7; background: transparent;')
+        self.title_label.setStyleSheet('font-size: 14px; font-weight: 700; color: #f4f5f7; background: transparent;')
         self.sub_label = QLabel('', self)
-        self.sub_label.setStyleSheet('font-size: 11px; color: #9ca3af; background: transparent;')
+        self.sub_label.setWordWrap(True)
+        self.sub_label.setStyleSheet('font-size: 12px; color: #9ca3af; background: transparent;')
 
         layout.addWidget(self.value_label)
         layout.addWidget(self.title_label)
         layout.addWidget(self.sub_label)
+        layout.addStretch(1)
 
     def set_metric(self, value: int, subtitle: str) -> None:
         self.value_label.setText(str(value))
@@ -91,72 +96,88 @@ class StorySummaryTab(QWidget):
 
         content = QWidget()
         root = QVBoxLayout(content)
-        root.setContentsMargins(12, 12, 12, 12)
-        root.setSpacing(14)
+        root.setContentsMargins(18, 18, 18, 18)
+        root.setSpacing(18)
 
-        # Hero Card: Splash + Título + Descrição
+        # Hero Card: Splash proporcional ampliada + Título + Descrição
         hero = QFrame(content)
         hero.setObjectName('SummaryHeroCard')
         hero.setStyleSheet(
             'QFrame#SummaryHeroCard {'
             '  background-color: #1c212e;'
             '  border: 1px solid #2b3245;'
-            '  border-radius: 10px;'
+            '  border-radius: 12px;'
             '}'
         )
         hero_layout = QHBoxLayout(hero)
-        hero_layout.setContentsMargins(16, 16, 16, 16)
-        hero_layout.setSpacing(18)
+        hero_layout.setContentsMargins(20, 20, 20, 20)
+        hero_layout.setSpacing(24)
 
-        self.splash_preview = AssetPreviewWidget(156, parent=hero, enable_zoom=True)
-        hero_layout.addWidget(self.splash_preview, 0, Qt.AlignmentFlag.AlignTop)
+        self.splash_preview = AssetPreviewWidget(
+            260,
+            parent=hero,
+            enable_zoom=True,
+            fit_aspect=True,
+            max_size=(340, 240),
+        )
+        hero_layout.addWidget(self.splash_preview, 0, Qt.AlignmentFlag.AlignVCenter)
 
         hero_text = QVBoxLayout()
-        hero_text.setSpacing(6)
+        hero_text.setSpacing(10)
 
         meta_row = QHBoxLayout()
-        meta_row.setSpacing(8)
+        meta_row.setSpacing(10)
         self.story_id_badge = QLabel('—', hero)
         self.story_id_badge.setStyleSheet(
             'background-color: #0e1015;'
             'color: #f59e0b;'
             'border: 1px solid #2b3245;'
-            'border-radius: 5px;'
-            'padding: 2px 8px;'
-            'font-size: 11px;'
+            'border-radius: 6px;'
+            'padding: 3px 10px;'
+            'font-size: 12px;'
             'font-weight: 700;'
         )
         self.subtitle_label = QLabel('', hero)
-        self.subtitle_label.setStyleSheet('color: #9ca3af; font-size: 12px; background: transparent;')
+        self.subtitle_label.setStyleSheet('color: #9ca3af; font-size: 13px; background: transparent;')
         meta_row.addWidget(self.story_id_badge, 0)
         meta_row.addWidget(self.subtitle_label, 1)
         hero_text.addLayout(meta_row)
 
         self.title_label = QLabel('Nenhuma história carregada', hero)
         self.title_label.setWordWrap(True)
-        self.title_label.setStyleSheet('font-size: 22px; font-weight: 700; color: #f4f5f7; background: transparent;')
+        self.title_label.setStyleSheet('font-size: 26px; font-weight: 800; color: #f4f5f7; background: transparent;')
         hero_text.addWidget(self.title_label)
 
         self.description_label = QLabel('Selecione ou crie uma história no topo para começar.', hero)
         self.description_label.setWordWrap(True)
-        self.description_label.setStyleSheet('font-size: 13px; color: #d1d5db; line-height: 1.4; background: transparent;')
+        self.description_label.setStyleSheet(
+            'font-size: 14px; color: #d1d5db; line-height: 1.5; background: transparent;'
+        )
         hero_text.addWidget(self.description_label)
         hero_text.addStretch(1)
 
         hero_layout.addLayout(hero_text, 1)
-        root.addWidget(hero)
+        root.addWidget(hero, 1)
 
-        # Faixa de Métricas
+        # Faixa de painéis com os contadores de assets por categoria
         metrics_row = QHBoxLayout()
-        metrics_row.setSpacing(12)
-        self.missions_card = _MetricCard('Missões', content)
-        self.characters_card = _MetricCard('Personagens', content)
-        self.items_card = _MetricCard('Itens usados na história', content)
+        metrics_row.setSpacing(16)
+        self.missions_card = _MetricCard('Missões', accent_color='#f59e0b', parent=content)
+        self.characters_card = _MetricCard('Personagens', accent_color='#38bdf8', parent=content)
+        self.items_card = _MetricCard('Itens usados na história', accent_color='#22c55e', parent=content)
         metrics_row.addWidget(self.missions_card, 1)
         metrics_row.addWidget(self.characters_card, 1)
         metrics_row.addWidget(self.items_card, 1)
         root.addLayout(metrics_row)
-        root.addStretch(1)
+
+        # Rodapé discreto de orientação
+        self.footer_hint = QLabel(
+            'Clique na imagem de abertura para ampliar. Use as abas acima para editar os detalhes desta história.',
+            content,
+        )
+        self.footer_hint.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.footer_hint.setStyleSheet('font-size: 12px; color: #6b7280; padding: 4px 0;')
+        root.addWidget(self.footer_hint)
 
         scroll.setWidget(content)
         self.load_package(None)

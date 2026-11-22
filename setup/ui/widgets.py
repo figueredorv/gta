@@ -176,40 +176,66 @@ class ImageZoomWindow(QDialog):
 
 
 class AssetPreviewWidget(QStackedWidget):
-    """Exibe preview de imagem PNG/JPG/WEBP ou SVG em tamanho fixo."""
+    """Exibe preview de imagem PNG/JPG/WEBP ou SVG em tamanho fixo ou proporcional."""
 
-    def __init__(self, size: int = 56, parent: QWidget | None = None, enable_zoom: bool = False) -> None:
+    def __init__(
+        self,
+        size: int = 56,
+        parent: QWidget | None = None,
+        enable_zoom: bool = False,
+        fit_aspect: bool = False,
+        max_size: tuple[int, int] | None = None,
+    ) -> None:
         super().__init__(parent)
         self._size = size
         self._enable_zoom = enable_zoom
+        self._fit_aspect = fit_aspect
+        self._max_size = max_size or (size, size)
         self._loaded_file: Path | None = None
         self._has_valid_image = False
         self._zoom_window: ImageZoomWindow | None = None
-        self.setFixedSize(size, size)
 
         self._raster = QLabel('—')
         self._raster.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._raster.setStyleSheet('border: 1px solid #2b3245; border-radius: 6px; background: #0e1015;')
 
         self._svg = QSvgWidget()
-        self._svg.setFixedSize(size, size)
-
         self.addWidget(self._raster)
         self.addWidget(self._svg)
+        self._apply_box_size(size, size)
+
+    def _apply_box_size(self, width: int, height: int) -> None:
+        self.setFixedSize(width, height)
+        self._svg.setFixedSize(width, height)
+
+    def _proportional_box(self, raw_size: QSize) -> tuple[int, int]:
+        if not self._fit_aspect:
+            return self._size, self._size
+        max_w, max_h = self._max_size
+        w, h = raw_size.width(), raw_size.height()
+        if w <= 0 or h <= 0:
+            return min(max_w, self._size), min(max_h, max(90, round(self._size * 0.625)))
+        ratio = min(max_w / w, max_h / h)
+        return max(1, round(w * ratio)), max(1, round(h * ratio))
 
     def load_file(self, file_path: Path | None) -> None:
         if not file_path or not file_path.is_file():
             self._loaded_file = None
             self._has_valid_image = False
             self._update_zoom_affordance()
+            box_w, box_h = self._proportional_box(QSize(0, 0))
+            self._apply_box_size(box_w, box_h)
             self._raster.setPixmap(QPixmap())
             self._raster.setText('—')
             self.setCurrentWidget(self._raster)
             return
         if file_path.suffix.lower() == '.svg':
             self._svg.load(str(file_path))
+            renderer = self._svg.renderer()
             self._loaded_file = file_path
-            self._has_valid_image = self._svg.renderer().isValid()
+            self._has_valid_image = renderer.isValid()
+            box_w, box_h = self._proportional_box(renderer.defaultSize())
+            self._apply_box_size(box_w, box_h)
             self._update_zoom_affordance()
             self.setCurrentWidget(self._svg)
             return
@@ -218,13 +244,17 @@ class AssetPreviewWidget(QStackedWidget):
             self._loaded_file = None
             self._has_valid_image = False
             self._update_zoom_affordance()
+            box_w, box_h = self._proportional_box(QSize(0, 0))
+            self._apply_box_size(box_w, box_h)
             self._raster.setPixmap(QPixmap())
             self._raster.setText('!')
             self.setCurrentWidget(self._raster)
             return
+        box_w, box_h = self._proportional_box(pix.size())
+        self._apply_box_size(box_w, box_h)
         scaled = pix.scaled(
-            self._size - 4,
-            self._size - 4,
+            max(1, box_w - 4),
+            max(1, box_h - 4),
             Qt.AspectRatioMode.KeepAspectRatio,
             Qt.TransformationMode.SmoothTransformation,
         )

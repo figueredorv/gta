@@ -89,6 +89,9 @@ class SummaryTabTests(unittest.TestCase):
             self.assertEqual(tab.description_label.text(), 'Uma história de teste no mundo aberto.')
             self.assertTrue(tab.splash_preview._has_valid_image)
             self.assertTrue(tab.splash_preview._enable_zoom)
+            # Imagem 160x90 (16:9) em max_size (340, 240) -> 340x191 mantendo proporção
+            self.assertEqual(tab.splash_preview.width(), 340)
+            self.assertEqual(tab.splash_preview.height(), 191)
             self.assertEqual(tab.missions_card.value_label.text(), '1')
             self.assertEqual(tab.characters_card.value_label.text(), '2')
             self.assertEqual(tab.items_card.value_label.text(), '1')
