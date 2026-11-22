@@ -1,3 +1,15 @@
+export function fitRoofLogoSize(imgW, imgH, roofW, roofH, ratio = 0.84) {
+  const w = Math.max(1, Number(imgW) || 1);
+  const h = Math.max(1, Number(imgH) || 1);
+  const maxW = Math.max(1, roofW * ratio);
+  const maxH = Math.max(1, roofH * ratio);
+  const scale = Math.min(maxW / w, maxH / h);
+  return {
+    width: w * scale,
+    height: h * scale,
+  };
+}
+
 export class Minimap {
   constructor(canvas) {
     this.canvas = canvas;
@@ -84,8 +96,14 @@ export class Minimap {
           ctx.fillRect(bx, by, bw, bh);
           const logoImg = meta?.roofLogo ? this.#getOrLoadLogo(meta.roofLogo) : null;
           if (logoImg && !logoImg._failed && logoImg.complete && logoImg.naturalWidth > 0) {
-            const box = Math.max(8, Math.min(bw, bh) * 0.85);
-            ctx.drawImage(logoImg, bx + (bw - box) * 0.5, by + (bh - box) * 0.5, box, box);
+            const { width: lw, height: lh } = fitRoofLogoSize(
+              logoImg.naturalWidth || logoImg.width,
+              logoImg.naturalHeight || logoImg.height,
+              bw,
+              bh,
+              0.84,
+            );
+            ctx.drawImage(logoImg, bx + (bw - lw) * 0.5, by + (bh - lh) * 0.5, lw, lh);
           } else {
             const cx = bx + bw * 0.5;
             const cy = by + bh * 0.5;

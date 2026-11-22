@@ -510,7 +510,7 @@ export class WebGLRenderer {
             alpha: roofAlpha,
             isHospital: building.type === 'hospital',
             isEncounter,
-            roofLogo: encounterMeta?.roofLogo || '',
+            roofLogo: encounterMeta?.roofLogo || building.roofLogo || '',
           });
         }
 
@@ -895,13 +895,18 @@ export class WebGLRenderer {
         const red = [0.88, 0.14, 0.18, ra];
         this.#pushQuad(cx - armThick * 0.5, cy - crossLen * 0.5, armThick, crossLen, 0, 'solid', red);
         this.#pushQuad(cx - crossLen * 0.5, cy - armThick * 0.5, crossLen, armThick, 0, 'solid', red);
-      } else if (roof.isEncounter) {
+      } else if (roof.isEncounter || roof.roofLogo) {
         const logoEntry = roof.roofLogo ? this.#getOrLoadLogoTexture(roof.roofLogo) : null;
         if (logoEntry && logoEntry.loaded && logoEntry.texture) {
-          const maxBox = Math.min(roof.w, roof.h) * 0.62;
+          const maxW = roof.w * 0.78;
+          const maxH = roof.h * 0.78;
           const aspect = logoEntry.width / Math.max(1, logoEntry.height);
-          const lw = aspect >= 1 ? maxBox : maxBox * aspect;
-          const lh = aspect >= 1 ? maxBox / aspect : maxBox;
+          let lw = maxW;
+          let lh = lw / Math.max(0.01, aspect);
+          if (lh > maxH) {
+            lh = maxH;
+            lw = lh * aspect;
+          }
           pendingCustomQuads.push({
             cx: roof.x + roof.w * 0.5,
             cy: roof.y + roof.h * 0.5,
@@ -911,7 +916,7 @@ export class WebGLRenderer {
             entry: logoEntry,
             alpha: ra,
           });
-        } else {
+        } else if (roof.isEncounter) {
           const cx = roof.x + roof.w * 0.5;
           const cy = roof.y + roof.h * 0.5;
           const markH = Math.min(roof.w, roof.h) * 0.52;

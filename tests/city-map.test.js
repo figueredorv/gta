@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { CityMap } from '../src/world/city-map.js';
 import { TrafficManager } from '../src/world/traffic-manager.js';
-import { Minimap } from '../src/ui/minimap.js';
+import { Minimap, fitRoofLogoSize } from '../src/ui/minimap.js';
 
 test('gera cidade-base 30x30 com códigos únicos de ruas, casas, comércios e praças', () => {
   const map = new CityMap();
@@ -276,4 +276,14 @@ test('getExpandedZoomMetrics escala ícones de jogador, destino e espessura da r
   assert.ok(z6.routeLineWidth > z3.routeLineWidth);
   assert.ok(z6.objectiveRadius > z3.objectiveRadius);
   assert.ok(z6.playerScale > z3.playerScale);
+});
+
+test('fitRoofLogoSize preserva a proporção original da imagem dentro do retângulo do telhado', () => {
+  const wide = fitRoofLogoSize(400, 100, 200, 100, 0.8);
+  assert.ok(Math.abs(wide.width / wide.height - 4) < 0.001);
+  assert.ok(wide.width <= 160 && wide.height <= 80);
+
+  const tall = fitRoofLogoSize(100, 300, 200, 100, 0.8);
+  assert.ok(Math.abs(tall.width / tall.height - 1 / 3) < 0.001);
+  assert.ok(tall.width <= 160 && tall.height <= 80);
 });
