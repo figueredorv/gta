@@ -122,6 +122,9 @@ class ImageZoomWindow(QDialog):
             self._media_widget = label
 
         layout.addWidget(self._media_widget, alignment=Qt.AlignmentFlag.AlignCenter)
+        self._media_widget.setCursor(Qt.CursorShape.PointingHandCursor)
+        self._media_widget.setToolTip('Clique na imagem para fechar')
+        self._media_widget.installEventFilter(self)
 
         footer = QHBoxLayout()
         footer.addStretch(1)
@@ -148,6 +151,10 @@ class ImageZoomWindow(QDialog):
             self._armed = True
 
     def eventFilter(self, watched: QObject, event: QEvent) -> bool:
+        if watched is self._media_widget and not self._closing:
+            if event.type() == QEvent.Type.MouseButtonPress:
+                self.close()
+                return True
         if self._armed and not self._closing and self._anchor_window is not None:
             if event.type() == QEvent.Type.MouseButtonPress and isinstance(watched, QWidget):
                 if watched.window() is self._anchor_window:

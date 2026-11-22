@@ -100,6 +100,16 @@ class ImageZoomTests(unittest.TestCase):
             QTest.mouseClick(win, Qt.MouseButton.LeftButton, pos=QPoint(250, 200))
             self._app.processEvents()
             self.assertFalse(zoom.isVisible())
+
+            # Reabre e fecha clicando diretamente na imagem ampliada
+            QTest.mouseClick(preview, Qt.MouseButton.LeftButton)
+            self._app.processEvents()
+            zoom2 = preview._zoom_window
+            self.assertIsNotNone(zoom2)
+            self.assertTrue(zoom2.isVisible())
+            QTest.mouseClick(zoom2._media_widget, Qt.MouseButton.LeftButton)
+            self._app.processEvents()
+            self.assertFalse(zoom2.isVisible())
             win.close()
 
     def test_all_image_selectors_have_zoom_enabled(self) -> None:
