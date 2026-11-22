@@ -623,6 +623,17 @@ body {
   text-align: right;
 }
 
+.start-credit-link {
+  pointer-events: auto;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.start-credit-link:hover {
+  color: #fbbf24;
+}
+
 @media (orientation: portrait), (max-aspect-ratio: 1 / 1) {
   .start-screen {
     flex-direction: column;
