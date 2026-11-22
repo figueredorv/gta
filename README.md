@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./story/vibe-coding/favicon.svg" alt="Logo GTA — Guanabara Testando Agentes" width="84" height="84">
+  <img src="./src/images/favicon.svg" alt="Logo GTA — Guanabara Testando Agentes" width="84" height="84">
 </p>
 
 <h1 align="center">GTA (Guanabara Testando Agentes)</h1>
@@ -9,12 +9,12 @@
 </p>
 
 <p align="center">
-  <img src="./story/vibe-coding/splash/splash-start.png" alt="Tela de abertura de GTA: Missão Vibe Coding" width="760">
+  <img src="./src/images/splash-start.png" alt="Tela de abertura de GTA: Missão Vibe Coding" width="760">
 </p>
 
 <p align="center">
   <a href="https://gustavoguanabara.github.io/gta/" target="_blank" rel="noopener noreferrer">
-    <img src="./btn-jogue-gta.png" alt="JOGUE GTA AGORA" width="360">
+    <img src="./src/images/btn-jogue-gta.png" alt="JOGUE GTA AGORA" width="360">
   </a>
 </p>
 
@@ -35,7 +35,7 @@ Nesta edição, a pasta [`story/vibe-coding/`](./story/vibe-coding) traz a campa
 <table>
   <tr>
     <td width="190" align="center">
-      <img src="./story/vibe-coding/assets/guanabara.png" alt="Personagem Guanabara" width="160">
+      <img src="./src/images/guanabara.png" alt="Personagem Guanabara" width="160">
     </td>
     <td>
       Você controla <strong>Guanabara</strong>, um motorista experiente que conhece cada rua, esquina e atalho da ilha.<br><br>
