@@ -170,6 +170,12 @@ Curtiu o projeto? Faça um **fork**, crie sua própria história em [`story/`](.
 
 ## Histórico de versões
 
+### `v1.7.3` — Minimapa Proporcional, Telhados sem Distorção e Créditos na Abertura (2026-11-22)
+- **Minimapa Ampliado:** ícones de posição do jogador, ponto de destino amarelo e espessura da linha do trajeto agora crescem proporcionalmente ao nível de zoom aplicado.
+- **Telhados Personalizados:** preservação da proporção original das imagens de logo nos telhados tanto na renderização WebGL quanto no minimapa e mapa ampliado.
+- **Tela de Abertura (`splash`):** exibição discreta dos créditos de autoria e da versão atual do software no canto inferior direito.
+- **README:** imagens centralizadas em `src/images/` com botões de acesso rápido **VEJA O VÍDEO** e **JOGUE GTA AGORA**.
+
 ### `v1.6` — Aba Resumo, Zoom de Imagens e Melhorias Visuais (2026-11-22)
 - **Aba Resumo no Setup:** nova aba inicial com a imagem de abertura (`splash`) em proporção original, título, descrição e painéis clicáveis com contadores de missões, personagens e itens usados na história.
 - **Zoom de Imagens no Setup:** clique em qualquer miniatura de seletor de imagem (abertura, encerramento, favicon, visões de personagem, item e logo de telhado) para abrir uma janela de ampliação proporcional, fechando pelo botão **Fechar**, clique na janela principal ou clique na própria imagem ampliada.

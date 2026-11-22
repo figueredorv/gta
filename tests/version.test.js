@@ -14,7 +14,7 @@ test('formatStartCredit exibe autoria, ano 2026 e a versão atual do sistema', (
   assert.ok(text.includes(APP_VERSION));
 
   const readme = fs.readFileSync(path.join(appRoot, 'README.md'), 'utf8');
-  const match = readme.match(/^###\s+`(v\d+\.\d+)`/m);
+  const match = readme.match(/^###\s+`(v\d+\.\d+(?:\.\d+)?)`/m);
   assert.ok(match, 'README.md deve registrar a versão mais recente no histórico');
   assert.equal(APP_VERSION, match[1], 'APP_VERSION deve acompanhar a versão mais recente definida em README.md');
 });
