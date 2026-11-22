@@ -35,7 +35,9 @@ export class Minimap {
     visibleMinY,
     visibleMaxY,
     expanded = false,
+    zoom = 1,
   }) {
+    const zoomMetrics = expanded ? this.getExpandedZoomMetrics(zoom) : null;
     ctx.fillStyle = '#144970';
     ctx.fillRect(0, 0, w, h);
 
@@ -109,14 +111,18 @@ export class Minimap {
     }
 
     if (routePoints && routePoints.length > 1) {
+      ctx.save();
       ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = expanded ? 3 : 2.5;
+      ctx.lineWidth = zoomMetrics ? zoomMetrics.routeLineWidth : 2.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
       ctx.beginPath();
       ctx.moveTo(toMiniX(routePoints[0].x), toMiniY(routePoints[0].y));
       for (let i = 1; i < routePoints.length; i += 1) {
         ctx.lineTo(toMiniX(routePoints[i].x), toMiniY(routePoints[i].y));
       }
       ctx.stroke();
+      ctx.restore();
     }
 
     if (objectivePoint) {
@@ -153,19 +159,19 @@ export class Minimap {
         ctx.stroke();
         ctx.restore();
       } else {
-        if (expanded) {
+        if (zoomMetrics) {
           ctx.strokeStyle = 'rgba(251, 191, 36, 0.55)';
-          ctx.lineWidth = 2;
+          ctx.lineWidth = zoomMetrics.objectiveRingStrokeWidth;
           ctx.beginPath();
-          ctx.arc(rawOx, rawOy, 10, 0, Math.PI * 2);
+          ctx.arc(rawOx, rawOy, zoomMetrics.objectiveRingRadius, 0, Math.PI * 2);
           ctx.stroke();
         }
         ctx.fillStyle = '#fbbf24';
         ctx.beginPath();
-        ctx.arc(rawOx, rawOy, expanded ? 6 : 5, 0, Math.PI * 2);
+        ctx.arc(rawOx, rawOy, zoomMetrics ? zoomMetrics.objectiveRadius : 5, 0, Math.PI * 2);
         ctx.fill();
         ctx.strokeStyle = '#111827';
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = zoomMetrics ? zoomMetrics.objectiveStrokeWidth : 1.5;
         ctx.stroke();
       }
     }
@@ -199,9 +205,9 @@ export class Minimap {
     ctx.rotate(player.angle);
     ctx.fillStyle = '#f8fafc';
     ctx.strokeStyle = '#0f172a';
-    ctx.lineWidth = expanded ? 2 : 1.2;
+    ctx.lineWidth = zoomMetrics ? zoomMetrics.playerStrokeWidth : 1.2;
     ctx.beginPath();
-    const s = expanded ? 1.25 : 1;
+    const s = zoomMetrics ? zoomMetrics.playerScale : 1;
     ctx.moveTo(7 * s, 0);
     ctx.lineTo(-5 * s, -4.5 * s);
     ctx.lineTo(-3 * s, 0);
@@ -246,6 +252,22 @@ export class Minimap {
       width = Math.round(height * aspect);
     }
     return { width, height };
+  }
+
+  getExpandedZoomMetrics(zoom = 1) {
+    const clampedZoom = Math.max(1, Math.min(6, Number(zoom) || 1));
+    const factor = 1 + (clampedZoom - 1) * 0.6;
+    const strokeFactor = Math.max(1, Math.min(2.5, factor * 0.65));
+    return {
+      factor,
+      routeLineWidth: 3 * factor,
+      objectiveRadius: 6 * factor,
+      objectiveRingRadius: 10 * factor,
+      objectiveStrokeWidth: 1.5 * strokeFactor,
+      objectiveRingStrokeWidth: 2 * strokeFactor,
+      playerScale: 1.25 * factor,
+      playerStrokeWidth: 2 * strokeFactor,
+    };
   }
 
   getExpandedBaseScale(expandedCanvas, cityMap) {
@@ -348,6 +370,7 @@ export class Minimap {
       visibleMinY: Math.max(0, centerY - halfVisibleH),
       visibleMaxY: Math.min(cityMap.worldHeight, centerY + halfVisibleH),
       expanded: true,
+      zoom,
     });
   }
 }

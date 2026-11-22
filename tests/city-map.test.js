@@ -257,3 +257,23 @@ test('resolveItemLocation posiciona item em rua isolada exatamente no centro hor
   assert.equal(vPt.x, vRoad.bounds.x + vRoad.bounds.w * 0.5);
   assert.equal(vPt.y, vRoad.bounds.y + vRoad.bounds.h * 0.5);
 });
+
+test('getExpandedZoomMetrics escala ícones de jogador, destino e espessura da rota proporcionalmente ao zoom', () => {
+  const minimap = new Minimap({ getContext: () => null });
+  const z1 = minimap.getExpandedZoomMetrics(1);
+  const z3 = minimap.getExpandedZoomMetrics(3);
+  const z6 = minimap.getExpandedZoomMetrics(6);
+
+  assert.equal(z1.routeLineWidth, 3);
+  assert.equal(z1.objectiveRadius, 6);
+  assert.equal(z1.playerScale, 1.25);
+
+  assert.ok(z3.routeLineWidth > z1.routeLineWidth);
+  assert.ok(z3.objectiveRadius > z1.objectiveRadius);
+  assert.ok(z3.objectiveRingRadius > z1.objectiveRingRadius);
+  assert.ok(z3.playerScale > z1.playerScale);
+
+  assert.ok(z6.routeLineWidth > z3.routeLineWidth);
+  assert.ok(z6.objectiveRadius > z3.objectiveRadius);
+  assert.ok(z6.playerScale > z3.playerScale);
+});
