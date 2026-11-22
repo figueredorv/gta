@@ -1,5 +1,5 @@
 import { Engine } from './core/engine.js?v=60';
-import { APP_VERSION, AUTHOR_INSTAGRAM_URL } from './version.js?v=2';
+import { renderAuthorCredit } from './version.js?v=3';
 import { HudController } from './ui/hud-controller.js?v=41';
 import { CutsceneController } from './ui/cutscene-controller.js?v=15';
 import { PauseMenuController } from './ui/pause-menu.js?v=6';
@@ -41,19 +41,8 @@ async function boot() {
   const storySelector = new StorySelectorController();
   const inventoryController = new InventoryController();
   window.__gameBooted = true;
-  const startCreditEl = document.getElementById('start-credit');
-  if (startCreditEl) {
-    startCreditEl.textContent = '';
-    startCreditEl.appendChild(document.createTextNode('Desenvolvido por '));
-    const authorLink = document.createElement('a');
-    authorLink.href = AUTHOR_INSTAGRAM_URL;
-    authorLink.target = '_blank';
-    authorLink.rel = 'noopener noreferrer';
-    authorLink.className = 'start-credit-link';
-    authorLink.textContent = 'Gustavo Guanabara';
-    startCreditEl.appendChild(authorLink);
-    startCreditEl.appendChild(document.createTextNode(` em 2026 — ${APP_VERSION}`));
-  }
+  renderAuthorCredit(document.getElementById('start-credit'));
+  renderAuthorCredit(document.getElementById('pause-credit'));
   const canvas = document.getElementById('game-canvas');
   const minimapCanvas = document.getElementById('minimap-canvas');
   const touchControls = document.getElementById('touch-controls');

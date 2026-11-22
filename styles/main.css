@@ -634,6 +634,14 @@ body {
   color: #fbbf24;
 }
 
+.pause-credit {
+  margin: 14px 0 0;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: rgba(244, 245, 247, 0.72);
+  text-align: center;
+}
+
 @media (orientation: portrait), (max-aspect-ratio: 1 / 1) {
   .start-screen {
     flex-direction: column;
