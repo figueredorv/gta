@@ -6,7 +6,7 @@ from pathlib import Path
 import threading
 from typing import Callable
 
-from PySide6.QtCore import QEvent, QObject, QSize, Qt
+from PySide6.QtCore import QEvent, QObject, QSize, QTimer, Qt
 from PySide6.QtGui import QGuiApplication, QMouseEvent, QPixmap
 from PySide6.QtSvg import QSvgRenderer
 from PySide6.QtSvgWidgets import QSvgWidget
@@ -63,9 +63,9 @@ class ImageZoomWindow(QDialog):
         self._file_path = file_path
         self._anchor_window = anchor_window if anchor_window is not self else None
         self._closing = False
+        self._armed = False
 
         self.setModal(False)
-        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, True)
         self.setWindowTitle(f'Visualização — {file_path.name}')
         self.setWindowFlags(
             Qt.WindowType.Window
@@ -138,16 +138,30 @@ class ImageZoomWindow(QDialog):
             x = anchor_geo.center().x() - self.width() // 2
             y = anchor_geo.center().y() - self.height() // 2
             self.move(x, y)
-            self._anchor_window.installEventFilter(self)
+            app = QApplication.instance()
+            if app is not None:
+                app.installEventFilter(self)
+        QTimer.singleShot(0, self._arm_auto_close)
+
+    def _arm_auto_close(self) -> None:
+        if not self._closing:
+            self._armed = True
 
     def eventFilter(self, watched: QObject, event: QEvent) -> bool:
-        if watched is self._anchor_window and not self._closing:
-            if event.type() in (QEvent.Type.MouseButtonPress, QEvent.Type.WindowActivate):
-                self.close()
+        if self._armed and not self._closing and self._anchor_window is not None:
+            if event.type() == QEvent.Type.MouseButtonPress and isinstance(watched, QWidget):
+                if watched.window() is self._anchor_window:
+                    self.close()
         return super().eventFilter(watched, event)
 
     def changeEvent(self, event: QEvent) -> None:
-        if event.type() == QEvent.Type.ActivationChange and not self.isActiveWindow() and self.isVisible() and not self._closing:
+        if (
+            self._armed
+            and event.type() == QEvent.Type.ActivationChange
+            and not self.isActiveWindow()
+            and self.isVisible()
+            and not self._closing
+        ):
             app = QApplication.instance()
             if app is not None and app.activeWindow() is self._anchor_window:
                 self.close()
@@ -155,8 +169,9 @@ class ImageZoomWindow(QDialog):
 
     def closeEvent(self, event: QEvent) -> None:
         self._closing = True
-        if self._anchor_window is not None:
-            self._anchor_window.removeEventFilter(self)
+        app = QApplication.instance()
+        if app is not None:
+            app.removeEventFilter(self)
         super().closeEvent(event)
 
 
@@ -239,7 +254,6 @@ class AssetPreviewWidget(QStackedWidget):
             self._zoom_window = None
         anchor = self.window() if self.window() is not self else None
         win = ImageZoomWindow(self._loaded_file, anchor_window=anchor)
-        win.destroyed.connect(lambda _obj=None: setattr(self, '_zoom_window', None))
         self._zoom_window = win
         win.show()
         win.raise_()
