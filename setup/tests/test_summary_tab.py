@@ -137,6 +137,12 @@ class SummaryTabTests(unittest.TestCase):
             win.tabs.setCurrentWidget(win.tab_summary)
             QTest.mouseClick(win.tab_summary.items_card, Qt.MouseButton.LeftButton)
             self.assertIs(win.tabs.currentWidget(), win.tab_items)
+
+            # Ao salvar (recarregamento com reset_to_summary=False), mantém a aba atual
+            if win._pkg is not None:
+                win.tabs.setCurrentWidget(win.tab_missions)
+                win._reload_catalog(select_id=win._pkg.id, reset_to_summary=False)
+                self.assertIs(win.tabs.currentWidget(), win.tab_missions)
         finally:
             win.close()
 

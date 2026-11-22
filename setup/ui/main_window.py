@@ -140,7 +140,7 @@ class SetupMainWindow(QMainWindow):
         self.tab_missions.refresh_reference_choices()
         self._mark_dirty()
 
-    def _reload_catalog(self, select_id: str | None = None) -> None:
+    def _reload_catalog(self, select_id: str | None = None, reset_to_summary: bool = True) -> None:
         self._suppress_story_change = True
         self.story_combo.clear()
         entries = load_catalog(self.app_root)
@@ -152,9 +152,9 @@ class SetupMainWindow(QMainWindow):
         self._suppress_story_change = False
         if entries:
             self.story_combo.setCurrentIndex(target_idx)
-            self._load_story(entries[target_idx].id)
+            self._load_story(entries[target_idx].id, reset_to_summary=reset_to_summary)
         else:
-            self._load_story(None)
+            self._load_story(None, reset_to_summary=reset_to_summary)
 
     def _on_story_changed(self, index: int) -> None:
         if self._suppress_story_change or index < 0:
@@ -186,7 +186,7 @@ class SetupMainWindow(QMainWindow):
         if app is not None:
             app.setWindowIcon(icon)
 
-    def _load_story(self, story_id: str | None) -> None:
+    def _load_story(self, story_id: str | None, reset_to_summary: bool = True) -> None:
         if not story_id:
             self._pkg = None
             for tab in (
@@ -199,7 +199,8 @@ class SetupMainWindow(QMainWindow):
             ):
                 tab.load_package(None)
             self._sync_window_icon()
-            self.tabs.setCurrentWidget(self.tab_summary)
+            if reset_to_summary:
+                self.tabs.setCurrentWidget(self.tab_summary)
             self.statusBar().showMessage('Nenhuma história carregada.')
             return
         try:
@@ -214,7 +215,8 @@ class SetupMainWindow(QMainWindow):
         self.tab_missions.load_package(self._pkg)
         self.tab_map.load_package(self._pkg)
         self._sync_window_icon()
-        self.tabs.setCurrentWidget(self.tab_summary)
+        if reset_to_summary:
+            self.tabs.setCurrentWidget(self.tab_summary)
         self._dirty = False
         self.statusBar().showMessage(f'História "{self._pkg.title}" ({self._pkg.id}) carregada.')
 
@@ -272,7 +274,7 @@ class SetupMainWindow(QMainWindow):
             QMessageBox.critical(self, 'Erro ao salvar', str(err))
             return False
         self._dirty = False
-        self._reload_catalog(select_id=self._pkg.id)
+        self._reload_catalog(select_id=self._pkg.id, reset_to_summary=False)
         self.statusBar().showMessage(f'História "{self._pkg.title}" salva com sucesso!')
         return True
 
