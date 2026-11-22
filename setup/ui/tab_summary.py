@@ -27,7 +27,7 @@ def count_used_items(pkg: StoryPackage | None) -> tuple[int, int]:
     if pkg is None:
         return 0, 0
     used_ids: set[str] = set()
-    for mission in pkg.missions:
+    for mission in pkg.missions.values():
         if mission.give_item.strip():
             used_ids.add(mission.give_item.strip())
         if mission.require_item.strip():
@@ -228,13 +228,14 @@ class StorySummaryTab(QWidget):
             return
 
         story_dir = self._story_dir_provider()
-        splash_path = (story_dir / pkg.splash_image) if (story_dir and pkg.splash_image) else None
+        splash_path = (story_dir / pkg.splash) if (story_dir and pkg.splash) else None
         self.splash_preview.load_file(splash_path)
 
         self.story_id_badge.setText(pkg.id or 'sem-id')
         self.subtitle_label.setText(pkg.subtitle or '')
         self.title_label.setText(pkg.title or pkg.id or 'História sem título')
-        self.description_label.setText(pkg.description.strip() if pkg.description.strip() else 'Nenhuma descrição cadastrada.')
+        desc = pkg.body_description.strip()
+        self.description_label.setText(desc if desc else 'Nenhuma descrição cadastrada.')
 
         encounters_count = len(pkg.encounters)
         encounters_label = (
@@ -251,8 +252,13 @@ class StorySummaryTab(QWidget):
         used_count, total_count = count_used_items(pkg)
         self.items_card.set_metric(used_count, f'de {total_count} no catálogo')
 
-        if pkg.missions:
-            for idx, mission in enumerate(pkg.missions, start=1):
+        ordered_missions = [pkg.missions[mid] for mid in pkg.missions_order if mid in pkg.missions]
+        for mid, mission in pkg.missions.items():
+            if mid not in pkg.missions_order:
+                ordered_missions.append(mission)
+
+        if ordered_missions:
+            for idx, mission in enumerate(ordered_missions, start=1):
                 title = mission.title.strip() or mission.id
                 route = f'{mission.start} → {mission.target}' if (mission.start or mission.target) else ''
                 detail = mission.objective.strip() or route
@@ -263,8 +269,13 @@ class StorySummaryTab(QWidget):
         else:
             self.missions_list.addItem('Nenhuma missão cadastrada ainda.')
 
-        if pkg.characters:
-            for char in pkg.characters:
+        ordered_chars = [pkg.characters[cid] for cid in pkg.characters_order if cid in pkg.characters]
+        for cid, char in pkg.characters.items():
+            if cid not in pkg.characters_order:
+                ordered_chars.append(char)
+
+        if ordered_chars:
+            for char in ordered_chars:
                 name = char.name.strip() or char.id
                 detail = char.profile.strip() or char.traits.strip()
                 text = f'{name} ({char.id})'
