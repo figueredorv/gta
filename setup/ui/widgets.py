@@ -274,7 +274,7 @@ class AssetPickerRow(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(8)
 
-        self.preview = AssetPreviewWidget(48)
+        self.preview = AssetPreviewWidget(48, enable_zoom=True)
         self.path_edit = QLineEdit()
         self.path_edit.setReadOnly(True)
         self.path_edit.setPlaceholderText('Nenhuma imagem selecionada')

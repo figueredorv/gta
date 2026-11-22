@@ -99,7 +99,7 @@ class StoryMetadataTab(QWidget):
 
         favicon_row = QHBoxLayout()
         favicon_row.setSpacing(8)
-        self.favicon_preview = AssetPreviewWidget(48, parent=self)
+        self.favicon_preview = AssetPreviewWidget(48, parent=self, enable_zoom=True)
         self.favicon_edit = QLineEdit()
         self.favicon_edit.setReadOnly(True)
         self.favicon_edit.setPlaceholderText('Nenhum favicon na raiz')
