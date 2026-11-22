@@ -13,12 +13,14 @@
 </p>
 
 <p align="center">
-  <a href="https://gustavoguanabara.github.io/gta/" target="_blank" rel="noopener noreferrer">
-    <img src="./src/images/btn-jogue-gta.png" alt="JOGUE GTA AGORA" width="320">
-  </a>
-  &nbsp;&nbsp;
   <a href="https://youtu.be/QIRH31j42yw" target="_blank" rel="noopener noreferrer">
     <img src="./src/images/btn-veja-video.png" alt="VEJA O VÍDEO" width="320">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://gustavoguanabara.github.io/gta/" target="_blank" rel="noopener noreferrer">
+    <img src="./src/images/btn-jogue-gta.png" alt="JOGUE GTA AGORA" width="320">
   </a>
 </p>
 
