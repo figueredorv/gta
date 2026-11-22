@@ -6,10 +6,13 @@ from pathlib import Path
 import threading
 from typing import Callable
 
-from PySide6.QtCore import Qt
-from PySide6.QtGui import QPixmap
+from PySide6.QtCore import QEvent, QObject, QSize, Qt
+from PySide6.QtGui import QGuiApplication, QMouseEvent, QPixmap
+from PySide6.QtSvg import QSvgRenderer
 from PySide6.QtSvgWidgets import QSvgWidget
 from PySide6.QtWidgets import (
+    QApplication,
+    QDialog,
     QFileDialog,
     QHBoxLayout,
     QLabel,
@@ -17,18 +20,156 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QPushButton,
     QStackedWidget,
+    QVBoxLayout,
     QWidget,
 )
 
 from ..core.story_io import StoryIOError, import_asset_file
 
 
+def compute_zoom_target_size(
+    image_size: QSize,
+    max_bounds: QSize,
+    min_side: int = 320,
+) -> QSize:
+    """Calcula o tamanho de exibição mantendo a proporção exata da imagem."""
+    max_w = max(1, max_bounds.width())
+    max_h = max(1, max_bounds.height())
+    w = image_size.width()
+    h = image_size.height()
+    if w <= 0 or h <= 0:
+        side = min(min_side, max_w, max_h)
+        return QSize(max(1, side), max(1, side))
+
+    largest = max(w, h)
+    if largest < min_side:
+        scale = min_side / largest
+        w = max(1, round(w * scale))
+        h = max(1, round(h * scale))
+
+    if w > max_w or h > max_h:
+        ratio = min(max_w / w, max_h / h)
+        w = max(1, round(w * ratio))
+        h = max(1, round(h * ratio))
+
+    return QSize(w, h)
+
+
+class ImageZoomWindow(QDialog):
+    """Janela não-modal de ampliação proporcional da imagem selecionada."""
+
+    def __init__(self, file_path: Path, anchor_window: QWidget | None = None) -> None:
+        super().__init__(anchor_window)
+        self._file_path = file_path
+        self._anchor_window = anchor_window if anchor_window is not self else None
+        self._closing = False
+
+        self.setModal(False)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, True)
+        self.setWindowTitle(f'Visualização — {file_path.name}')
+        self.setWindowFlags(
+            Qt.WindowType.Window
+            | Qt.WindowType.WindowTitleHint
+            | Qt.WindowType.WindowCloseButtonHint
+        )
+        self.setStyleSheet(
+            'QDialog { background: #0e1015; color: #f4f5f7; }'
+            'QLabel#zoom_frame { background: #141720; border: 1px solid #2b3245; border-radius: 6px; }'
+        )
+
+        screen = (
+            self._anchor_window.screen()
+            if self._anchor_window is not None and self._anchor_window.screen() is not None
+            else QGuiApplication.primaryScreen()
+        )
+        if screen is not None:
+            avail = screen.availableGeometry().size()
+            max_bounds = QSize(max(240, int(avail.width() * 0.8) - 48), max(240, int(avail.height() * 0.8) - 96))
+        else:
+            max_bounds = QSize(960, 720)
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(14, 14, 14, 14)
+        layout.setSpacing(10)
+
+        if file_path.suffix.lower() == '.svg':
+            renderer = QSvgRenderer(str(file_path))
+            raw_size = renderer.defaultSize()
+            if not renderer.isValid() or raw_size.isEmpty():
+                raw_size = QSize(320, 320)
+            target_size = compute_zoom_target_size(raw_size, max_bounds)
+            self._media_widget: QWidget = QSvgWidget(str(file_path), self)
+            self._media_widget.setFixedSize(target_size)
+        else:
+            pix = QPixmap(str(file_path))
+            raw_size = pix.size()
+            target_size = compute_zoom_target_size(raw_size, max_bounds)
+            label = QLabel(self)
+            label.setObjectName('zoom_frame')
+            label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            label.setFixedSize(target_size)
+            if not pix.isNull():
+                is_small_upscale = max(raw_size.width(), raw_size.height()) <= 128 and (
+                    target_size.width() > raw_size.width() or target_size.height() > raw_size.height()
+                )
+                transform = (
+                    Qt.TransformationMode.FastTransformation
+                    if is_small_upscale
+                    else Qt.TransformationMode.SmoothTransformation
+                )
+                scaled = pix.scaled(target_size, Qt.AspectRatioMode.KeepAspectRatio, transform)
+                label.setPixmap(scaled)
+            self._media_widget = label
+
+        layout.addWidget(self._media_widget, alignment=Qt.AlignmentFlag.AlignCenter)
+
+        footer = QHBoxLayout()
+        footer.addStretch(1)
+        self.close_btn = QPushButton('Fechar', self)
+        self.close_btn.clicked.connect(self.close)
+        footer.addWidget(self.close_btn)
+        layout.addLayout(footer)
+
+        self.adjustSize()
+        self.setFixedSize(self.sizeHint())
+
+        if self._anchor_window is not None:
+            anchor_geo = self._anchor_window.frameGeometry()
+            x = anchor_geo.center().x() - self.width() // 2
+            y = anchor_geo.center().y() - self.height() // 2
+            self.move(x, y)
+            self._anchor_window.installEventFilter(self)
+
+    def eventFilter(self, watched: QObject, event: QEvent) -> bool:
+        if watched is self._anchor_window and not self._closing:
+            if event.type() in (QEvent.Type.MouseButtonPress, QEvent.Type.WindowActivate):
+                self.close()
+        return super().eventFilter(watched, event)
+
+    def changeEvent(self, event: QEvent) -> None:
+        if event.type() == QEvent.Type.ActivationChange and not self.isActiveWindow() and self.isVisible() and not self._closing:
+            app = QApplication.instance()
+            if app is not None and app.activeWindow() is self._anchor_window:
+                self.close()
+        super().changeEvent(event)
+
+    def closeEvent(self, event: QEvent) -> None:
+        self._closing = True
+        if self._anchor_window is not None:
+            self._anchor_window.removeEventFilter(self)
+        super().closeEvent(event)
+
+
 class AssetPreviewWidget(QStackedWidget):
     """Exibe preview de imagem PNG/JPG/WEBP ou SVG em tamanho fixo."""
 
-    def __init__(self, size: int = 56, parent: QWidget | None = None) -> None:
+    def __init__(self, size: int = 56, parent: QWidget | None = None, enable_zoom: bool = False) -> None:
         super().__init__(parent)
         self._size = size
+        self._enable_zoom = enable_zoom
+        self._loaded_file: Path | None = None
+        self._has_valid_image = False
+        self._zoom_window: ImageZoomWindow | None = None
         self.setFixedSize(size, size)
 
         self._raster = QLabel('—')
@@ -43,16 +184,25 @@ class AssetPreviewWidget(QStackedWidget):
 
     def load_file(self, file_path: Path | None) -> None:
         if not file_path or not file_path.is_file():
+            self._loaded_file = None
+            self._has_valid_image = False
+            self._update_zoom_affordance()
             self._raster.setPixmap(QPixmap())
             self._raster.setText('—')
             self.setCurrentWidget(self._raster)
             return
         if file_path.suffix.lower() == '.svg':
             self._svg.load(str(file_path))
+            self._loaded_file = file_path
+            self._has_valid_image = self._svg.renderer().isValid()
+            self._update_zoom_affordance()
             self.setCurrentWidget(self._svg)
             return
         pix = QPixmap(str(file_path))
         if pix.isNull():
+            self._loaded_file = None
+            self._has_valid_image = False
+            self._update_zoom_affordance()
             self._raster.setPixmap(QPixmap())
             self._raster.setText('!')
             self.setCurrentWidget(self._raster)
@@ -63,9 +213,45 @@ class AssetPreviewWidget(QStackedWidget):
             Qt.AspectRatioMode.KeepAspectRatio,
             Qt.TransformationMode.SmoothTransformation,
         )
+        self._loaded_file = file_path
+        self._has_valid_image = True
+        self._update_zoom_affordance()
         self._raster.setText('')
         self._raster.setPixmap(scaled)
         self.setCurrentWidget(self._raster)
+
+    def _update_zoom_affordance(self) -> None:
+        if self._enable_zoom and self._has_valid_image:
+            self.setCursor(Qt.CursorShape.PointingHandCursor)
+            self.setToolTip('Clique para ampliar a imagem')
+        else:
+            self.unsetCursor()
+            self.setToolTip('')
+
+    def open_zoom(self) -> ImageZoomWindow | None:
+        if not (self._enable_zoom and self._has_valid_image and self._loaded_file):
+            return None
+        if self._zoom_window is not None:
+            try:
+                self._zoom_window.close()
+            except RuntimeError:
+                pass
+            self._zoom_window = None
+        anchor = self.window() if self.window() is not self else None
+        win = ImageZoomWindow(self._loaded_file, anchor_window=anchor)
+        win.destroyed.connect(lambda _obj=None: setattr(self, '_zoom_window', None))
+        self._zoom_window = win
+        win.show()
+        win.raise_()
+        win.activateWindow()
+        return win
+
+    def mousePressEvent(self, event: QMouseEvent) -> None:
+        if self._enable_zoom and self._has_valid_image and event.button() == Qt.MouseButton.LeftButton:
+            self.open_zoom()
+            event.accept()
+            return
+        super().mousePressEvent(event)
 
 
 class AssetPickerRow(QWidget):
