@@ -36,18 +36,15 @@ Todo o motor roda diretamente no navegador, sem frameworks ou dependências exte
 
 Nesta edição, a pasta [`story/vibe-coding/`](./story/vibe-coding) traz a campanha **Missão Vibe Coding** (e o jogo suporta múltiplas histórias selecionáveis na abertura).
 
-<table>
-  <tr>
-    <td width="190" align="center">
-      <img src="./src/images/guanabara.png" alt="Personagem Guanabara" width="160">
-    </td>
-    <td>
-      Você controla <strong>Guanabara</strong>, um motorista experiente que conhece cada rua, esquina e atalho da ilha.<br><br>
-      Tudo começa com uma encomenda misteriosa: uma <strong>caixa secreta</strong> que precisa cruzar a cidade. A partir daí, uma sequência de entregas, imprevistos tecnológicos, bugs improváveis e figuras inspiradas no universo de tecnologia e inteligência artificial transforma um simples trajeto em uma corrida cheia de humor — envolvendo GPUs, servidores, robôs e muito café.<br><br>
-      <em>Sem spoilers:</em> explore a cidade com calma, converse com moradores nas calçadas e fique atento aos itens colecionáveis espalhados pelos quarteirões!
-    </td>
-  </tr>
-</table>
+<img src="./src/images/guanabara.png" alt="Personagem Guanabara" width="160" align="left">
+
+Você controla **Guanabara**, um motorista experiente que conhece cada rua, esquina e atalho da ilha.
+
+Tudo começa com uma encomenda misteriosa: uma **caixa secreta** que precisa cruzar a cidade. A partir daí, uma sequência de entregas, imprevistos tecnológicos, bugs improváveis e figuras inspiradas no universo de tecnologia e inteligência artificial transforma um simples trajeto em uma corrida cheia de humor — envolvendo GPUs, servidores, robôs e muito café.
+
+*Sem spoilers:* explore a cidade com calma, converse com moradores nas calçadas e fique atento aos itens colecionáveis espalhados pelos quarteirões!
+
+<br clear="all">
 
 ---
 
