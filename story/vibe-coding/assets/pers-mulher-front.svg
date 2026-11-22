@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 96 128" fill="none">
+  <title>Lia — visão frontal aprimorada</title>
+  <desc>Personagem sem braços, com cabelo escuro, expressão simpática, camisa vermelha, calça escura e tênis. Fundo transparente.</desc>
+  <defs>
+    <linearGradient id="skin" x1="34" y1="19" x2="61" y2="47" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE0AC"/><stop offset=".6" stop-color="#F1C27D"/><stop offset="1" stop-color="#DFA061"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="34" y1="12" x2="59" y2="29" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#624339"/><stop offset="1" stop-color="#302634"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="31" y1="52" x2="65" y2="91" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF767C"/><stop offset=".5" stop-color="#E53946"/><stop offset="1" stop-color="#A91E34"/>
+    </linearGradient>
+    <linearGradient id="pants" x1="35" y1="91" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#35455E"/><stop offset="1" stop-color="#302634"/>
+    </linearGradient>
+  </defs>
+  <g id="personagem" transform="matrix(1.0000000000 0 0 1.0000000000 0.0000000000 -1.5329625000)">
+  <g id="pernas" stroke="#302634" stroke-width=".7" stroke-linejoin="round">
+    <path d="M33.5 90H62.5L62 99L60.7 115.8H51.3L50.3 100H45.7L44.7 115.8H35.3L34 99Z" fill="url(#pants)"/>
+    <path d="M48 94V99.5M36 95L35.5 101M60 95L60.5 101" stroke="#51637C"/>
+    <path d="M37.2 102L38 113M54 102L54.6 113" stroke="#65738A" stroke-opacity=".4"/>
+    <path d="M35.4 112.5H44.8M51.2 112.5H60.7" stroke="#101C30"/>
+  </g>
+  <g id="tenis" stroke="#162238" stroke-width=".7" stroke-linejoin="round">
+    <path d="M35.3 114H44.8L45.5 119.4Q45.7 121.5 43.5 121.7H33.5Q31.7 121.7 32 119.7L32.5 117.7Q33 115.5 35.3 114Z" fill="#E8EFF7"/>
+    <path d="M51.2 114H60.7Q63 115.5 63.5 117.7L64 119.7Q64.3 121.7 62.5 121.7H52.5Q50.3 121.5 50.5 119.4Z" fill="#E8EFF7"/>
+    <path d="M32.3 119H45.4M50.6 119H63.7" stroke="#A6B5C9"/>
+    <path d="M36 114.5H43L43.6 118H34Z M53 114.5H60L62 118H52.4Z" fill="#27466F"/>
+    <path d="M37 115.6H41.7M36.4 117H42.2M54.3 115.6H59M53.8 117H59.6" stroke="#E9F0FA" stroke-width=".6" stroke-linecap="round"/>
+  </g>
+  <g id="pescoco">
+    <path d="M42 43H54V53Q48 57 42 53Z" fill="url(#skin)" stroke="#C88D55" stroke-width=".65"/>
+    <path d="M42.4 46Q48 50.5 53.6 46V49.5Q48 52 42.4 49.5Z" fill="#C88D55" opacity=".45"/>
+  </g>
+  <g id="camisa" stroke-linejoin="round">
+    <path d="M41.7 50Q35 49.8 32.6 54Q30 59 30.6 70L31.4 88Q31.5 93 36 93.5H60Q64.5 93 64.6 88L65.4 70Q66 59 63.4 54Q61 49.8 54.3 50Q48 56 41.7 50Z" fill="url(#shirt)" stroke="#79172B" stroke-width=".9"/>
+    <path d="M33.6 57Q32.3 64 33.3 82" stroke="#FFB1AC" stroke-width="1.3" stroke-linecap="round" opacity=".7"/>
+    <path d="M62 59L61.5 85Q61.5 88.4 59.6 90.2H36" stroke="#A21C31" stroke-width="1.2" opacity=".65"/>
+    <path d="M41.5 50Q48 56 54.5 50L52 57L48 54.4L44 57Z" fill="#981C31" stroke="#77152A" stroke-width=".65"/>
+    <path d="M41.8 50.6L44.1 55.8L48 53.6L51.9 55.8L54.2 50.6" stroke="#FFC0B7" stroke-width=".65"/>
+    <path d="M48 54.5V65" stroke="#A61C34" stroke-width="1.5"/>
+    <circle cx="48" cy="58.2" r=".65" fill="#FFE5DB"/>
+    <circle cx="48" cy="62" r=".65" fill="#FFE5DB"/>
+    <path d="M53.8 64.8H60V70Q57 72.5 53.8 70Z" fill="#C72C40" stroke="#8E1930" stroke-width=".65"/>
+    <path d="M54.3 65.7H59.5" stroke="#FFB5AE" stroke-width=".65"/>
+    <path d="M35 79L39 80M57 83L61 81M33.6 90H62.4" stroke="#FFB9B2" stroke-opacity=".4" stroke-width=".6"/>
+  </g>
+  <g id="cabelo-atras"><path d="M31 24Q27 35 30.2 46.3Q36 51 41 46L39 27Z M65 24Q69 35 65.8 46.3Q60 51 55 46L57 27Z" fill="#3B2930" stroke="#30222A" stroke-width=".85" stroke-linejoin="round"/><path d="M31.7 33Q30 41 33.4 46M64.3 33Q66 41 62.6 46" stroke="#9D7560" stroke-width=".8" opacity=".6"/></g><g id="orelhas">
+    <ellipse cx="30.3" cy="31.7" rx="3" ry="4.6" fill="#E7AE70" stroke="#CA9059" stroke-width=".65"/>
+    <ellipse cx="65.7" cy="31.7" rx="3" ry="4.6" fill="#E7AE70" stroke="#CA9059" stroke-width=".65"/>
+    <path d="M29.6 30Q32 29.2 31.4 33.8M66.4 30Q64 29.2 64.6 33.8" stroke="#C58A54" stroke-width=".7" stroke-linecap="round"/>
+  </g>
+  <g id="rosto">
+    <path d="M30.5 26Q30 13 48 13Q66 13 65.5 26L64.6 35Q63.1 47.5 48 49Q32.9 47.5 31.4 35Z" fill="url(#skin)" stroke="#C8915A" stroke-width=".8"/>
+    <ellipse cx="36.8" cy="36.5" rx="3.2" ry="1.6" fill="#EBA080" opacity=".45"/>
+    <ellipse cx="59.2" cy="36.5" rx="3.2" ry="1.6" fill="#EBA080" opacity=".45"/>
+    <path d="M36.8 27.2Q40.2 25.7 43.6 27M52.4 27Q55.8 25.7 59.2 27.2" stroke="#344053" stroke-width="1.15" stroke-linecap="round"/>
+    <ellipse cx="40.4" cy="31.2" rx="2.5" ry="2.8" fill="#18253B"/>
+    <ellipse cx="55.6" cy="31.2" rx="2.5" ry="2.8" fill="#18253B"/>
+    <circle cx="39.7" cy="30.3" r=".8" fill="white"/>
+    <circle cx="54.9" cy="30.3" r=".8" fill="white"/>
+    <path d="M47.8 32.5L46.8 35.7Q48 36.5 49.4 35.7" stroke="#C98B52" stroke-width=".8" stroke-linecap="round"/>
+    <path d="M42.5 39.1Q48 43.8 53.5 39.1Q48 40.5 42.5 39.1Z" fill="#B34F57" stroke="#B34F57" stroke-width=".6"/>
+    <path d="M44.1 39.6Q48 40.8 51.9 39.6" stroke="#FFF0D8" stroke-width="1" stroke-linecap="round"/>
+    <path d="M45.6 44.3Q48 45 50.4 44.3" stroke="#DAA366" stroke-width=".65" stroke-linecap="round"/>
+  </g>
+  <g id="expressao"><path d="M37.8 29.4L36.6 28.4M58.2 29.4L59.4 28.4" stroke="#302634" stroke-width=".65" stroke-linecap="round"/><path d="M44.7 42.1Q48 43.6 51.3 42.1" stroke="#C25C66" stroke-width=".7" stroke-linecap="round"/></g><g id="cabelo" stroke-linejoin="round">
+    <path d="M30.8 30L29.9 23Q29.8 15 36.9 12.9L35.7 10.9Q40.5 9.9 43.4 11.3Q48.3 7.7 53.3 11Q61.2 10.3 64.7 17.3Q67.4 22.2 65.2 30L62.7 26L61.9 20.3Q57.9 22.5 53.3 20.3Q48 24.6 42.1 21.7Q38.4 24 34.1 22.6L33.3 27Z" fill="url(#hair)" stroke="#30222A" stroke-width=".85"/>
+    <path d="M34.3 18.4Q38.7 13.6 43.6 15.5M44.7 14.7Q49 11.4 54.6 14.5M39.4 19.9Q45.9 21.5 51.3 17.8M55.5 18Q60 20.6 62 21" stroke="#9D7560" stroke-width="1" stroke-linecap="round" opacity=".65"/>
+  </g>
+  </g>
+</svg>
