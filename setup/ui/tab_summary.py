@@ -3,22 +3,17 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QSize, Qt
-from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
-    QAbstractItemView,
     QFrame,
-    QGroupBox,
     QHBoxLayout,
     QLabel,
-    QListWidget,
-    QListWidgetItem,
     QScrollArea,
     QVBoxLayout,
     QWidget,
 )
 
-from ..core.models import Character, StoryPackage
+from ..core.models import StoryPackage
 from .widgets import AssetPreviewWidget
 
 
@@ -161,59 +156,12 @@ class StorySummaryTab(QWidget):
         metrics_row.addWidget(self.characters_card, 1)
         metrics_row.addWidget(self.items_card, 1)
         root.addLayout(metrics_row)
-
-        # Colunas de Listas: Missões e Personagens
-        lists_row = QHBoxLayout()
-        lists_row.setSpacing(12)
-
-        missions_group = QGroupBox('Missões da História', content)
-        missions_layout = QVBoxLayout(missions_group)
-        self.missions_list = QListWidget(missions_group)
-        self.missions_list.setSelectionMode(QAbstractItemView.SelectionMode.NoSelection)
-        self.missions_list.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        self.missions_list.setMinimumHeight(220)
-        missions_layout.addWidget(self.missions_list)
-
-        chars_group = QGroupBox('Personagens', content)
-        chars_layout = QVBoxLayout(chars_group)
-        self.characters_list = QListWidget(chars_group)
-        self.characters_list.setSelectionMode(QAbstractItemView.SelectionMode.NoSelection)
-        self.characters_list.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        self.characters_list.setIconSize(QSize(28, 28))
-        self.characters_list.setMinimumHeight(220)
-        chars_layout.addWidget(self.characters_list)
-
-        lists_row.addWidget(missions_group, 1)
-        lists_row.addWidget(chars_group, 1)
-        root.addLayout(lists_row, 1)
+        root.addStretch(1)
 
         scroll.setWidget(content)
         self.load_package(None)
 
-    def _character_icon(self, story_dir: Path | None, char: Character) -> QIcon:
-        if not story_dir:
-            return QIcon()
-        for rel in (char.sprite_front, char.sprite_top, char.sprite_cutscene, char.sprite_left, char.sprite_right):
-            if not rel:
-                continue
-            path = story_dir / rel
-            if path.is_file():
-                pix = QPixmap(str(path))
-                if not pix.isNull():
-                    return QIcon(
-                        pix.scaled(
-                            28,
-                            28,
-                            Qt.AspectRatioMode.KeepAspectRatio,
-                            Qt.TransformationMode.SmoothTransformation,
-                        )
-                    )
-        return QIcon()
-
     def load_package(self, pkg: StoryPackage | None) -> None:
-        self.missions_list.clear()
-        self.characters_list.clear()
-
         if pkg is None:
             self.story_id_badge.setText('—')
             self.subtitle_label.setText('')
@@ -223,8 +171,6 @@ class StorySummaryTab(QWidget):
             self.missions_card.set_metric(0, '0 encontros extras')
             self.characters_card.set_metric(0, 'Nenhum personagem')
             self.items_card.set_metric(0, '0 no catálogo')
-            self.missions_list.addItem('Nenhuma história carregada.')
-            self.characters_list.addItem('Nenhuma história carregada.')
             return
 
         story_dir = self._story_dir_provider()
@@ -251,37 +197,3 @@ class StorySummaryTab(QWidget):
 
         used_count, total_count = count_used_items(pkg)
         self.items_card.set_metric(used_count, f'de {total_count} no catálogo')
-
-        ordered_missions = [pkg.missions[mid] for mid in pkg.missions_order if mid in pkg.missions]
-        for mid, mission in pkg.missions.items():
-            if mid not in pkg.missions_order:
-                ordered_missions.append(mission)
-
-        if ordered_missions:
-            for idx, mission in enumerate(ordered_missions, start=1):
-                title = mission.title.strip() or mission.id
-                route = f'{mission.start} → {mission.target}' if (mission.start or mission.target) else ''
-                detail = mission.objective.strip() or route
-                text = f'{idx:02d}. {title}'
-                if detail:
-                    text = f'{text}  —  {detail}'
-                self.missions_list.addItem(QListWidgetItem(text))
-        else:
-            self.missions_list.addItem('Nenhuma missão cadastrada ainda.')
-
-        ordered_chars = [pkg.characters[cid] for cid in pkg.characters_order if cid in pkg.characters]
-        for cid, char in pkg.characters.items():
-            if cid not in pkg.characters_order:
-                ordered_chars.append(char)
-
-        if ordered_chars:
-            for char in ordered_chars:
-                name = char.name.strip() or char.id
-                detail = char.profile.strip() or char.traits.strip()
-                text = f'{name} ({char.id})'
-                if detail:
-                    text = f'{text}  —  {detail}'
-                icon = self._character_icon(story_dir, char)
-                self.characters_list.addItem(QListWidgetItem(icon, text))
-        else:
-            self.characters_list.addItem('Nenhum personagem cadastrado ainda.')

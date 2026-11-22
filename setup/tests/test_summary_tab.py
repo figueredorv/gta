@@ -93,10 +93,6 @@ class SummaryTabTests(unittest.TestCase):
             self.assertEqual(tab.characters_card.value_label.text(), '2')
             self.assertEqual(tab.items_card.value_label.text(), '1')
             self.assertIn('de 2', tab.items_card.sub_label.text())
-            self.assertEqual(tab.missions_list.count(), 1)
-            self.assertIn('Primeiro Contato', tab.missions_list.item(0).text())
-            self.assertEqual(tab.characters_list.count(), 2)
-            self.assertIn('Léo', tab.characters_list.item(0).text())
 
             tab.load_package(None)
             self.assertEqual(tab.title_label.text(), 'Nenhuma história carregada')
