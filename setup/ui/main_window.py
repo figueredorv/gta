@@ -33,6 +33,7 @@ from .tab_characters import CharactersTab
 from .tab_items import ItemsTab
 from .tab_map import MapLocationsTab
 from .tab_missions import MissionsAndEncountersTab
+from .tab_summary import StorySummaryTab
 from .tab_story import StoryMetadataTab
 from .widgets import LocalPreviewServer
 
@@ -95,6 +96,7 @@ class SetupMainWindow(QMainWindow):
 
         # Abas principais
         self.tabs = QTabWidget()
+        self.tab_summary = StorySummaryTab(self._current_story_dir)
         self.tab_story = StoryMetadataTab(
             self._current_story_dir,
             app_root=self.app_root,
@@ -106,11 +108,13 @@ class SetupMainWindow(QMainWindow):
         self.tab_missions = MissionsAndEncountersTab(self.app_root, on_data_changed=self._mark_dirty)
         self.tab_map = MapLocationsTab(self.app_root, self._current_story_dir, on_data_changed=self._mark_dirty)
 
+        self.tabs.addTab(self.tab_summary, 'Resumo')
         self.tabs.addTab(self.tab_story, 'História')
         self.tabs.addTab(self.tab_characters, 'Personagens')
         self.tabs.addTab(self.tab_items, 'Itens')
         self.tabs.addTab(self.tab_missions, 'Missões')
         self.tabs.addTab(self.tab_map, 'Mapa')
+        self.tabs.currentChanged.connect(self._on_tab_changed)
         root_layout.addWidget(self.tabs, 1)
 
         self.setStatusBar(QStatusBar())
@@ -154,11 +158,23 @@ class SetupMainWindow(QMainWindow):
         if story_id:
             self._load_story(str(story_id))
 
+    def _on_tab_changed(self, index: int) -> None:
+        if self.tabs.widget(index) is self.tab_summary:
+            self.tab_summary.load_package(self._pkg)
+
     def _load_story(self, story_id: str | None) -> None:
         if not story_id:
             self._pkg = None
-            for tab in (self.tab_story, self.tab_characters, self.tab_items, self.tab_missions, self.tab_map):
+            for tab in (
+                self.tab_summary,
+                self.tab_story,
+                self.tab_characters,
+                self.tab_items,
+                self.tab_missions,
+                self.tab_map,
+            ):
                 tab.load_package(None)
+            self.tabs.setCurrentWidget(self.tab_summary)
             self.statusBar().showMessage('Nenhuma história carregada.')
             return
         try:
@@ -166,11 +182,13 @@ class SetupMainWindow(QMainWindow):
         except StoryIOError as err:
             QMessageBox.critical(self, 'Erro ao carregar história', str(err))
             return
+        self.tab_summary.load_package(self._pkg)
         self.tab_story.load_package(self._pkg)
         self.tab_characters.load_package(self._pkg)
         self.tab_items.load_package(self._pkg)
         self.tab_missions.load_package(self._pkg)
         self.tab_map.load_package(self._pkg)
+        self.tabs.setCurrentWidget(self.tab_summary)
         self._dirty = False
         self.statusBar().showMessage(f'História "{self._pkg.title}" ({self._pkg.id}) carregada.')
 
