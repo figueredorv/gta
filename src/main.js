@@ -1,4 +1,5 @@
 import { Engine } from './core/engine.js?v=60';
+import { formatStartCredit } from './version.js?v=1';
 import { HudController } from './ui/hud-controller.js?v=41';
 import { CutsceneController } from './ui/cutscene-controller.js?v=15';
 import { PauseMenuController } from './ui/pause-menu.js?v=6';
@@ -40,6 +41,10 @@ async function boot() {
   const storySelector = new StorySelectorController();
   const inventoryController = new InventoryController();
   window.__gameBooted = true;
+  const startCreditEl = document.getElementById('start-credit');
+  if (startCreditEl) {
+    startCreditEl.textContent = formatStartCredit();
+  }
   const canvas = document.getElementById('game-canvas');
   const minimapCanvas = document.getElementById('minimap-canvas');
   const touchControls = document.getElementById('touch-controls');
