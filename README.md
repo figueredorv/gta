@@ -12,6 +12,12 @@
   <img src="./story/vibe-coding/splash/splash-start.png" alt="Tela de abertura de GTA: Missão Vibe Coding" width="760">
 </p>
 
+<p align="center">
+  <a href="https://gustavoguanabara.github.io/gta/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/JOGUE_GTA_AGORA-f59e0b?style=for-the-badge" alt="JOGUE GTA AGORA" height="44">
+  </a>
+</p>
+
 ---
 
 ## Sobre o Projeto
@@ -157,6 +163,13 @@ Curtiu o projeto? Faça um **fork**, crie sua própria história em [`story/`](.
 ---
 
 ## Histórico de versões
+
+### `v1.6` — Aba Resumo, Zoom de Imagens e Melhorias Visuais (2026-11-22)
+- **Aba Resumo no Setup:** nova aba inicial com a imagem de abertura (`splash`) em proporção original, título, descrição e painéis clicáveis com contadores de missões, personagens e itens usados na história.
+- **Zoom de Imagens no Setup:** clique em qualquer miniatura de seletor de imagem (abertura, encerramento, favicon, visões de personagem, item e logo de telhado) para abrir uma janela de ampliação proporcional, fechando pelo botão **Fechar**, clique na janela principal ou clique na própria imagem ampliada.
+- **Ícone Dinâmico da Janela:** o ícone da janela do Setup (exibido no `Alt+Tab` / `Cmd+Tab`) acompanha automaticamente o favicon da história carregada.
+- **Personalização de Personagens e Itens:** protagonista configurável por história, cor de pele (`skin_color`) por personagem com renderização de braços e pernas arredondados no jogo, catálogo puro de itens e posicionamento de extras por missão ou colecionáveis globais.
+- **README:** adicionado botão em destaque **JOGUE GTA AGORA** logo abaixo da imagem de abertura.
 
 ### `v1.5` — Instaladores, Lançadores e Desinstalador Multiplataforma do Setup (2026-11-18)
 - Adicionado instalador multiplataforma [`setup/install.py`](./setup/install.py) para criar o ambiente virtual isolado (`.venv`) e instalar o `PySide6`.
