@@ -6,8 +6,8 @@ from pathlib import Path
 import threading
 from typing import Callable
 
-from PySide6.QtCore import QEvent, QObject, QSize, QTimer, Qt
-from PySide6.QtGui import QGuiApplication, QMouseEvent, QPixmap
+from PySide6.QtCore import QEvent, QObject, QRectF, QSize, QTimer, Qt
+from PySide6.QtGui import QGuiApplication, QIcon, QMouseEvent, QPainter, QPixmap
 from PySide6.QtSvg import QSvgRenderer
 from PySide6.QtSvgWidgets import QSvgWidget
 from PySide6.QtWidgets import (
@@ -25,6 +25,40 @@ from PySide6.QtWidgets import (
 )
 
 from ..core.story_io import StoryIOError, import_asset_file
+
+
+def build_window_icon(icon_path: Path | None) -> QIcon:
+    """Constrói um QIcon multi-resolução a partir de .svg, .png ou .ico."""
+    if not icon_path or not icon_path.is_file():
+        return QIcon()
+    ext = icon_path.suffix.lower()
+    if ext == '.svg':
+        renderer = QSvgRenderer(str(icon_path))
+        if not renderer.isValid():
+            return QIcon()
+        icon = QIcon()
+        raw = renderer.defaultSize()
+        rw = max(1, raw.width()) if not raw.isEmpty() else 1
+        rh = max(1, raw.height()) if not raw.isEmpty() else 1
+        for size in (64, 128, 256):
+            pix = QPixmap(size, size)
+            pix.fill(Qt.GlobalColor.transparent)
+            scale = min(size / rw, size / rh)
+            w = rw * scale
+            h = rh * scale
+            target = QRectF((size - w) / 2.0, (size - h) / 2.0, w, h)
+            painter = QPainter(pix)
+            renderer.render(painter, target)
+            painter.end()
+            icon.addPixmap(pix)
+        return icon
+    if ext == '.ico':
+        icon = QIcon(str(icon_path))
+        return icon
+    pix = QPixmap(str(icon_path))
+    if pix.isNull():
+        return QIcon()
+    return QIcon(pix)
 
 
 def compute_zoom_target_size(

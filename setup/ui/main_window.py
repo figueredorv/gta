@@ -4,6 +4,7 @@ from pathlib import Path
 import webbrowser
 
 from PySide6.QtWidgets import (
+    QApplication,
     QComboBox,
     QFrame,
     QHBoxLayout,
@@ -23,6 +24,7 @@ from ..core.story_io import (
     StoryIOError,
     create_story,
     delete_story,
+    find_story_favicon,
     load_catalog,
     load_story_package,
     save_story_package,
@@ -34,6 +36,7 @@ from .tab_items import ItemsTab
 from .tab_map import MapLocationsTab
 from .tab_missions import MissionsAndEncountersTab
 from .tab_summary import StorySummaryTab
+from .widgets import build_window_icon
 from .tab_story import StoryMetadataTab
 from .widgets import LocalPreviewServer
 
@@ -102,6 +105,7 @@ class SetupMainWindow(QMainWindow):
             app_root=self.app_root,
             pkg_provider=lambda: self._pkg,
             on_data_changed=self._mark_dirty,
+            on_favicon_changed=self._sync_window_icon,
         )
         self.tab_characters = CharactersTab(self._current_story_dir, on_data_changed=self._on_refs_changed)
         self.tab_items = ItemsTab(self.app_root, self._current_story_dir, on_data_changed=self._on_refs_changed)
@@ -173,6 +177,15 @@ class SetupMainWindow(QMainWindow):
         if widget is not None:
             self.tabs.setCurrentWidget(widget)
 
+    def _sync_window_icon(self) -> None:
+        story_dir = self._current_story_dir()
+        fav = find_story_favicon(story_dir) if story_dir else None
+        icon = build_window_icon(fav)
+        self.setWindowIcon(icon)
+        app = QApplication.instance()
+        if app is not None:
+            app.setWindowIcon(icon)
+
     def _load_story(self, story_id: str | None) -> None:
         if not story_id:
             self._pkg = None
@@ -185,6 +198,7 @@ class SetupMainWindow(QMainWindow):
                 self.tab_map,
             ):
                 tab.load_package(None)
+            self._sync_window_icon()
             self.tabs.setCurrentWidget(self.tab_summary)
             self.statusBar().showMessage('Nenhuma história carregada.')
             return
@@ -199,6 +213,7 @@ class SetupMainWindow(QMainWindow):
         self.tab_items.load_package(self._pkg)
         self.tab_missions.load_package(self._pkg)
         self.tab_map.load_package(self._pkg)
+        self._sync_window_icon()
         self.tabs.setCurrentWidget(self.tab_summary)
         self._dirty = False
         self.statusBar().showMessage(f'História "{self._pkg.title}" ({self._pkg.id}) carregada.')

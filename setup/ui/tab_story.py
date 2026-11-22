@@ -36,6 +36,7 @@ class StoryMetadataTab(QWidget):
         app_root: Path | None = None,
         pkg_provider: Callable[[], StoryPackage | None] | None = None,
         on_data_changed: Callable[[], None] | None = None,
+        on_favicon_changed: Callable[[], None] | None = None,
         parent: QWidget | None = None,
     ) -> None:
         super().__init__(parent)
@@ -43,6 +44,7 @@ class StoryMetadataTab(QWidget):
         self._app_root = app_root
         self._pkg_provider = pkg_provider
         self._on_data_changed = on_data_changed
+        self._on_favicon_changed = on_favicon_changed
         self._pkg: StoryPackage | None = None
         self._protagonist_id: str = ''
 
@@ -247,6 +249,8 @@ class StoryMetadataTab(QWidget):
             QMessageBox.warning(self, 'Erro ao alterar favicon', str(err))
             return
         self._refresh_favicon()
+        if self._on_favicon_changed:
+            self._on_favicon_changed()
 
     def flush(self) -> None:
         self._sync()
