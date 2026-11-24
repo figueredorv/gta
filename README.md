@@ -1,3 +1,5 @@
+> **Sua cópia:** [jogar online](https://figueredorv.github.io/gta/) · [guia local, publicação e personalização](./MEU-PROJETO.md). No Windows, abra `JOGAR-LOCAL.bat` e acesse http://127.0.0.1:8080/.
+
 <p align="center">
   <img src="./src/images/favicon.svg" alt="Logo GTA — Guanabara Testando Agentes" width="84" height="84">
 </p>
