@@ -563,10 +563,15 @@ test('parseStoryCatalog valida stories.json real, entrada direta para 1 históri
   const catalogPath = path.resolve(storyDir, '../stories.json');
   const raw = fs.readFileSync(catalogPath, 'utf8');
   const entries = parseStoryCatalog(raw, 'stories.json');
-  assert.equal(entries.length, 1);
-  assert.equal(entries[0].id, 'vibe-coding');
-  assert.equal(entries[0].path, './story/vibe-coding');
-  assert.equal(shouldShowStorySelector(entries), false);
+  assert.equal(entries.length, 2);
+  const original = entries.find((entry) => entry.id === 'vibe-coding');
+  assert.equal(original.path, './story/vibe-coding');
+  const rescue = entries.find((entry) => entry.id === 'codigo-de-resgate');
+  assert.equal(rescue.path, './story/codigo-de-resgate');
+  assert.equal(shouldShowStorySelector(entries), true);
+
+  const singleStory = parseStoryCatalog(JSON.stringify({ stories: [original] }));
+  assert.equal(shouldShowStorySelector(singleStory), false);
 
   const twoStories = parseStoryCatalog(JSON.stringify({
     stories: [

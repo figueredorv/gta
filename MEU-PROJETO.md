@@ -4,6 +4,15 @@
 - Jogo online: https://figueredorv.github.io/gta/
 - Original de Gustavo Guanabara: https://github.com/gustavoguanabara/gta
 
+## Campanha personalizada
+
+**Aracaju: Código de Resgate** já tem o primeiro capítulo jogável, com Ruan
+Figueiredo, Fátima Micaella e nomes de ruas de Aracaju.
+
+- Local: http://127.0.0.1:8080/?story=codigo-de-resgate
+- Online: https://figueredorv.github.io/gta/?story=codigo-de-resgate
+- Arquivos e próximos capítulos: [guia da campanha](./story/codigo-de-resgate/README.md).
+
 ## Jogar no computador
 
 De duplo clique em `JOGAR-LOCAL.bat` e mantenha a janela aberta.

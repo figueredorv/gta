@@ -1,6 +1,13 @@
 {
   "stories": [
     {
+      "id": "codigo-de-resgate",
+      "title": "Aracaju: Código de Resgate",
+      "description": "Capítulo 1 jogável — Seja Ruan Figueiredo e siga a primeira pista para resgatar a professora Fátima Micaella.",
+      "cover": "./story/codigo-de-resgate/assets/capa.svg",
+      "path": "./story/codigo-de-resgate"
+    },
+    {
       "id": "vibe-coding",
       "title": "GTA: Missão Vibe Coding",
       "description": "Cruzando a cidade para descobrir o segredo guardado em uma caixa secreta e lidando com GPUs, servidores e robôs!",

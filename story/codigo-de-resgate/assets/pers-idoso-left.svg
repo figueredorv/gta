@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 96 128" fill="none"><title>Otto — visão esquerda</title><desc>Homem idoso barbudo sem braços. Canvas e escala de exportação compatíveis com a vista frontal. Fundo transparente.</desc><defs>
+    <linearGradient id="skin" x1="34" y1="19" x2="61" y2="47" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE0AC" /><stop offset=".6" stop-color="#F1C27D" /><stop offset="1" stop-color="#DFA061" />
+    </linearGradient>
+    <linearGradient id="hair" x1="34" y1="12" x2="59" y2="29" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EEF0EC" /><stop offset="1" stop-color="#939F9F" />
+    </linearGradient>
+    <linearGradient id="shirt" x1="31" y1="52" x2="65" y2="91" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#75B889" /><stop offset=".5" stop-color="#30834E" /><stop offset="1" stop-color="#1B5736" />
+    </linearGradient>
+    <linearGradient id="pants" x1="35" y1="91" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#35455E" /><stop offset="1" stop-color="#172237" />
+    </linearGradient>
+  </defs><g id="asset" transform="translate(0.000000000 0.000000000)"><g id="personagem" transform="translate(-0.003000000 -1.654412500)">
+<g id="pernas" stroke="#172237" stroke-width=".7" stroke-linejoin="round">
+ <path d="M40 90H57L56 115H42Z" fill="url(#pants)" />
+ <path d="M42 96L43 111M54 97L53 112" stroke="#65738A" opacity=".5" />
+ <path d="M41.8 112.5H56.2" stroke="#101C30" />
+</g>
+<g id="tenis" stroke="#162238" stroke-width=".7" stroke-linejoin="round">
+ <path d="M42 114H55.8L56.5 120.4Q56.5 121.7 55 121.7H35Q33 121.7 33.3 119.7Q33.5 117.7 37 116.9Z" fill="#E8EFF7" />
+ <path d="M33.6 119H56" stroke="#A6B5C9" />
+ <path d="M42 114.5H54.5V118H36.8Z" fill="#27466F" />
+ <path d="M40 116H45M38.5 117.2H44M48 115.2L50 117.1" stroke="#E9F0FA" stroke-width=".6" stroke-linecap="round" />
+</g>
+<g id="pescoco">
+ <path d="M42 43H53V53Q47 56 42 52Z" fill="url(#skin)" stroke="#C88D55" stroke-width=".65" />
+ <path d="M42 46Q48 49.5 53 46V50Q48 52 42 49.5Z" fill="#C88D55" opacity=".45" />
+</g>
+<g id="camisa" stroke-linejoin="round">
+ <path d="M42 50Q37 50.5 36 56Q34.6 66 35.8 84L36.2 88.6Q36.5 93.5 41 93.5H56Q60 93.5 60.2 89L60.5 66Q60.5 53 53 50Q48 54 42 50Z" fill="url(#shirt)" stroke="#19472E" stroke-width=".9" />
+ <path d="M38.5 57Q37.4 65 38 80" stroke="#B0DBB4" stroke-width="1.2" opacity=".7" stroke-linecap="round" />
+ <path d="M56.6 57Q58 72 57.2 88M38 90H57.5" stroke="#1F5637" stroke-width=".75" />
+ <path d="M42 50L40.3 55.5L45.2 54L48 52.9L51.7 55L53 50Q47.5 52.9 42 50Z" fill="#235F3C" stroke="#19472E" stroke-width=".6" />
+ <path d="M42.2 50.6L41.4 54.2L45.2 53.1" stroke="#B9DDBB" stroke-width=".65" />
+ <path d="M37.2 65V70Q38.4 71 39.5 69.5V65Z" fill="#2B7446" stroke="#1F5637" stroke-width=".6" />
+ <path d="M38 81L41.5 82M54 85L57.4 83.5" stroke="#AED8B2" stroke-opacity=".4" stroke-width=".6" />
+</g>
+<g id="rosto">
+ <path d="M32 25Q31 13 47 13Q63 13 64 27Q64.5 42 52 47.8Q45 51 38 44L35.3 39.5L31.7 38Q30.2 37.6 31.6 35L33.6 31Q31.8 28.5 32 25Z" fill="url(#skin)" stroke="#C8915A" stroke-width=".8" />
+ <g><path d="M36 36.5Q40 40 45 37L49 33L53 37Q54 46 46 51.8Q39 50 35 43L33 40.3L34.2 38.7Z" fill="#D9DDDA" stroke="#909B9A" stroke-width=".65" /><path d="M37 43L40 47M43 44L44 48M49 40L47 46" stroke="#F7F8F5" stroke-width=".85" stroke-linecap="round" /></g><ellipse cx="40" cy="36" rx="3" ry="1.6" fill="#EBA080" opacity=".4" />
+ <path d="M33 28Q36 26.8 39 28" stroke="#788381" stroke-width="1.1" stroke-linecap="round" />
+ <ellipse cx="35.8" cy="31.1" rx="1.8" ry="2.6" fill="#18253B" />
+ <circle cx="35.2" cy="30.3" r=".65" fill="white" />
+ <path d="M34.8 35.2L33.3 36.8L35.5 37.1" stroke="#C98B52" stroke-width=".7" stroke-linecap="round" />
+ <path d="M35.9 40.3Q39.7 42.8 43.7 40.2" stroke="#984E3F" stroke-width=".9" stroke-linecap="round" />
+ <path d="M38 40.9L41.5 40.8" stroke="#FFF0D8" stroke-width=".7" stroke-linecap="round" />
+<g><path d="M33.5 25.2L39 25M40 21.5L45 21M31.9 33L33.7 33.5" stroke="#C28A58" stroke-width=".65" stroke-linecap="round" /><path d="M35.3 39Q39 37 42 38.8" stroke="#F4F5F0" stroke-width="1.4" stroke-linecap="round" /></g></g>
+<g id="cabelo" stroke-linejoin="round">
+ <path d="M32.3 28Q28.6 20 34.5 14.5L34 11.8Q40 10.1 44 11.2Q50 8 55.2 11.5Q64.8 12 65 23Q66 34 59.5 38.8L53.6 37.6L52 28.4Q47 28 45.8 21.2Q40 24.5 34 22.8Z" fill="url(#hair)" stroke="#758182" stroke-width=".85" />
+ <path d="M35.4 17.9Q41 14 46 15M48 14.3Q54 12 59 17M49.6 19Q53.6 25 59.7 25M57 29L60.5 31.2" stroke="#FFFFFF" stroke-width="1" stroke-linecap="round" opacity=".65" />
+</g>
+<g id="orelha">
+ <ellipse cx="52.7" cy="32.8" rx="3.5" ry="4.5" fill="#E7AE70" stroke="#CA9059" stroke-width=".65" />
+ <path d="M51.7 31Q54.7 29.4 54 34L52.6 35" stroke="#C58A54" stroke-width=".7" stroke-linecap="round" />
+</g>
+</g></g></svg>

@@ -1,5 +1,7 @@
 > **Sua cópia:** [jogar online](https://figueredorv.github.io/gta/) · [guia local, publicação e personalização](./MEU-PROJETO.md). No Windows, abra `JOGAR-LOCAL.bat` e acesse http://127.0.0.1:8080/.
 
+> **Nova campanha:** [Aracaju: Código de Resgate — capítulo 1](https://figueredorv.github.io/gta/?story=codigo-de-resgate). Jogue como Ruan Figueiredo e siga a primeira pista de Fátima Micaella. [Detalhes e próximos capítulos](./story/codigo-de-resgate/README.md).
+
 <p align="center">
   <img src="./src/images/favicon.svg" alt="Logo GTA — Guanabara Testando Agentes" width="84" height="84">
 </p>

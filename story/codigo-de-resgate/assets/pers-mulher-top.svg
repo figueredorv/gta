@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 96 128" fill="none"><title>Lia — visão superior</title><desc>Personagem sem braços. Canvas e escala de exportação compatíveis com a vista frontal. Fundo transparente.</desc><defs>
+    <linearGradient id="skin" x1="34" y1="19" x2="61" y2="47" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE0AC" /><stop offset=".6" stop-color="#F1C27D" /><stop offset="1" stop-color="#DFA061" />
+    </linearGradient>
+    <linearGradient id="hair" x1="34" y1="12" x2="59" y2="29" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#624339" /><stop offset="1" stop-color="#302634" />
+    </linearGradient>
+    <linearGradient id="shirt" x1="31" y1="52" x2="65" y2="91" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF767C" /><stop offset=".5" stop-color="#E53946" /><stop offset="1" stop-color="#A91E34" />
+    </linearGradient>
+    <linearGradient id="pants" x1="35" y1="91" x2="60" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#35455E" /><stop offset="1" stop-color="#302634" />
+    </linearGradient>
+  </defs><g id="flip-vertical" transform="matrix(1 0 0 -1 0 128)"><g transform="translate(0.000000000 -5.658437500)"><g id="personagem" transform="matrix(1.0000000000 0 0 1.0000000000 0.0000000000 2.8291875000)"><g transform="rotate(180 48 64)">
+<defs>
+ <linearGradient id="top-shirt" x1="29" y1="54" x2="66" y2="85" gradientUnits="userSpaceOnUse"><stop stop-color="#FF767C" /><stop offset=".5" stop-color="#E53946" /><stop offset="1" stop-color="#A91E34" /></linearGradient>
+ <linearGradient id="top-hair" x1="34" y1="45" x2="61" y2="67" gradientUnits="userSpaceOnUse"><stop stop-color="#624339" /><stop offset="1" stop-color="#302634" /></linearGradient>
+</defs>
+
+<g id="camisa" stroke-linejoin="round">
+ <path d="M29 64Q29 54 39 52Q48 50 57 52Q67 54 67 64L66 74Q64 82 48 82Q32 82 30 74Z" fill="url(#top-shirt)" stroke="#79172B" stroke-width=".9" />
+ <path d="M32.3 64Q32.3 58 37 56" stroke="#FFB1AC" stroke-width="1.2" stroke-linecap="round" />
+ <path d="M63.5 63L63.4 73Q62 78 53 79" stroke="#8E1930" stroke-width=".8" />
+ <path d="M37 70Q48 78 59 70L55 76L48 73.4L41 76Z" fill="#981C31" stroke="#77152A" stroke-width=".65" />
+ <path d="M39 72L41.4 74.5L48 72.6L54.6 74.5L57 72" stroke="#FFC0B7" stroke-width=".65" />
+ <path d="M48 74.5V79" stroke="#A61C34" stroke-width="1.3" /><circle cx="48" cy="77.3" r=".65" fill="#FFE5DB" />
+</g>
+<g id="cabelo-atras"><path d="M32 54Q27 64 33 71L39 69L38 53Z M64 54Q69 64 63 71L57 69L58 53Z" fill="#3B2930" stroke="#30222A" stroke-width=".85" /></g><g id="cabeca">
+ <ellipse cx="32" cy="60.5" rx="2.8" ry="3.8" fill="#E7AE70" stroke="#CA9059" stroke-width=".65" />
+ <ellipse cx="64" cy="60.5" rx="2.8" ry="3.8" fill="#E7AE70" stroke="#CA9059" stroke-width=".65" />
+ <path d="M35.5 62Q48 59 60.5 62L59 68Q55 73.7 48 74Q41 73.7 37 68Z" fill="#F1C27D" stroke="#C8915A" stroke-width=".7" />
+ <path d="M46.4 71.5Q48 74.8 49.6 71.5" fill="#F8D49A" stroke="#C98B52" stroke-width=".6" />
+ <path d="M31 58Q30 46 39 43L38 41Q44 40 47 41.5Q53 38.5 58 43Q65.6 46 65 58L62 65Q57 67.6 53 65Q48 68.2 43 65Q38 67 33 64Z" fill="url(#top-hair)" stroke="#30222A" stroke-width=".85" stroke-linejoin="round" />
+ <path d="M35 52Q37 46 43 46M46 45.5Q53 42 58 48M37 57Q43 59 48 54M51 51Q54 57 61 57M41 61Q48 64 53 60" stroke="#9D7560" stroke-width="1" stroke-linecap="round" opacity=".65" />
+</g>
+</g></g></g></g></svg>
