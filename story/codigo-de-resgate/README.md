@@ -40,9 +40,11 @@ Esses quatro capítulos são roteiro futuro, ainda sem missões executáveis.
 
 As fichas em `characters/` definem nomes, perfis e imagens. Ruan e Fátima têm
 personagens ilustrados de corpo inteiro a partir das fotos fornecidas, com PNGs
-transparentes próprios para as cenas e sprites de visão superior para o mapa.
+transparentes próprios para as cenas. O personagem jogável de Ruan usa o modelo
+vetorial compacto original, recolorido com roupa marrom, pele morena e cabelo
+escuro, permitindo que braços e pernas animados permaneçam visíveis ao andar.
 Os arquivos são `assets/ruan-corpo-inteiro.png`, `assets/fatima-corpo-inteiro.png`,
-`assets/ruan-mapa.png` e `assets/fatima-mapa.png`. A arte dos coadjuvantes continua
+`assets/ruan-jogavel-{top,front,left,right}.svg` e `assets/fatima-mapa.png`. A arte dos coadjuvantes continua
 provisória. Os prompts e o processo estão em `../../docs/arte-personagens.md`.
 A capa vetorial é provisória e não retrata os personagens.
 

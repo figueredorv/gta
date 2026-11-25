@@ -35,9 +35,12 @@ test('carrega os dois capítulos de resgate com entregas, cenários e nomes para
   for (const characterId of ['ruan', 'fatima']) {
     const sprites = story.characters.get(characterId).sprites;
     assert.equal(sprites.cutscene, `${base}/assets/${characterId}-corpo-inteiro.png`);
-    assert.equal(sprites.top, `${base}/assets/${characterId}-mapa.png`);
+    assert.equal(sprites.top, characterId === 'ruan'
+      ? `${base}/assets/ruan-jogavel-top.svg`
+      : `${base}/assets/fatima-mapa.png`);
     assert.notEqual(sprites.cutscene, sprites.top);
   }
+  assert.equal(story.characters.get('ruan').sprites.front, `${base}/assets/ruan-jogavel-front.svg`);
   assert.match(story.characters.get('ruan').profile, /Programador/);
   for (const character of story.characters.values()) {
     for (const [view, url] of Object.entries(character.sprites)) {

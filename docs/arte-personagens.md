@@ -15,6 +15,15 @@ As fotos originais não fazem parte dos arquivos publicados do jogo.
 As fichas dos personagens apontam para imagens próprias. Os demais personagens
 mantêm suas imagens provisórias, sem usar as fotos de Ruan e Fátima.
 
+## Personagem jogável
+
+A pedido do usuário, Ruan voltou a usar o modelo vetorial original no mapa,
+com a geometria e as proporções originais e apenas a paleta personalizada:
+camisa marrom, cabelo escuro e pele morena. As quatro vistas estão em
+`story/codigo-de-resgate/assets/ruan-jogavel-{top,front,left,right}.svg`.
+O PNG `ruan-mapa.png` ficou como referência de arte e não é usado no personagem
+jogável. A imagem de corpo inteiro dos diálogos continua a mesma.
+
 ## Prompts usados
 
 ### Ruan — corpo inteiro
