@@ -24,4 +24,5 @@ Os dois primeiros capítulos levam Ruan do pendrive da feira à assistência té
 onde um registro aponta para a antiga sala de informática da escola.
 O resgate continua nos próximos quatro capítulos, ainda em desenvolvimento.
 A cidade usa nomes reais de vias de Aracaju em um mapa estilizado. Escola,
-estabelecimentos e acontecimentos são fictícios. Retratos e sprites são provisórios.
+estabelecimentos e acontecimentos são fictícios. Ruan e Fátima têm personagens
+ilustrados a partir das fotos de referência; os coadjuvantes usam imagens provisórias.

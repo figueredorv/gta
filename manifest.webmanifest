@@ -1,7 +1,7 @@
 {
-  "name": "Missão Vibe Coding — Curso em Vídeo",
-  "short_name": "GTA",
-  "description": "Cruzando a cidade para descobrir o segredo guardado em uma caixa secreta e lidando com GPUs, servidores e robôs!",
+  "name": "Aracaju: Código de Resgate",
+  "short_name": "Resgate",
+  "description": "Seja Ruan Figueiredo e siga as pistas para resgatar a professora Fátima Micaella em Aracaju.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "fullscreen",

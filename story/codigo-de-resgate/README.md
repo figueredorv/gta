@@ -38,9 +38,12 @@ Esses quatro capítulos são roteiro futuro, ainda sem missões executáveis.
 
 ## Conteúdo e imagens
 
-As fichas em `characters/` definem nomes, perfis e imagens. Os retratos e
-sprites foram reaproveitados do projeto original e são provisórios. O campo
-`sprite_cutscene` de cada ficha poderá apontar para a foto personalizada depois.
+As fichas em `characters/` definem nomes, perfis e imagens. Ruan e Fátima têm
+personagens ilustrados de corpo inteiro a partir das fotos fornecidas, com PNGs
+transparentes próprios para as cenas e sprites de visão superior para o mapa.
+Os arquivos são `assets/ruan-corpo-inteiro.png`, `assets/fatima-corpo-inteiro.png`,
+`assets/ruan-mapa.png` e `assets/fatima-mapa.png`. A arte dos coadjuvantes continua
+provisória. Os prompts e o processo estão em `../../docs/arte-personagens.md`.
 A capa vetorial é provisória e não retrata os personagens.
 
 As 62 vias do mapa receberam nomes de Aracaju; a lista e suas fontes públicas

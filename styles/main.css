@@ -955,7 +955,7 @@ body {
   position: relative;
   overflow: hidden;
   width: min(880px, 100%);
-  height: min(580px, 94dvh);
+  height: min(720px, 94dvh);
   background: linear-gradient(180deg, #1e293b 0%, #334155 58%, #1f2937 58%, #111827 100%);
   background-size: cover;
   background-position: center;
@@ -971,6 +971,7 @@ body {
 
 .cutscene-bg-label {
   position: relative;
+  flex-shrink: 0;
   z-index: 3;
   align-self: flex-start;
   background: rgba(14, 16, 21, 0.78);
@@ -984,11 +985,10 @@ body {
 }
 
 .cutscene-actors {
-  position: absolute;
-  top: 12px;
-  left: 8px;
-  right: 8px;
-  bottom: 0;
+  position: relative;
+  flex: 1;
+  min-height: 72px;
+  margin: 10px 0 12px;
   z-index: 1;
   pointer-events: none;
 }
@@ -996,7 +996,7 @@ body {
 .cutscene-actor {
   position: absolute;
   bottom: 0;
-  height: 92%;
+  height: 94%;
   width: min(54%, 340px);
   z-index: 1;
   display: flex;
@@ -1006,7 +1006,7 @@ body {
   gap: 0;
   opacity: 1;
   transform-origin: bottom center;
-  transform: translate3d(0, 8px, 0) scale(0.94);
+  transform: translate3d(0, 0, 0) scale(0.94);
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
@@ -1031,8 +1031,8 @@ body {
 }
 
 .cutscene-portrait {
-  aspect-ratio: 9 / 16;
-  height: 92%;
+  aspect-ratio: 2 / 3;
+  height: 100%;
   width: auto;
   max-width: 100%;
   max-height: 100%;
@@ -1056,7 +1056,9 @@ body {
 .cutscene-dialog-box {
   position: relative;
   z-index: 3;
-  margin-top: auto;
+  flex-shrink: 0;
+  max-height: 55%;
+  overflow-y: auto;
   background: rgba(14, 16, 21, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 12px;
@@ -2356,9 +2358,7 @@ body {
   }
 
   .cutscene-actors {
-    top: 8px;
-    left: 4px;
-    right: 4px;
+    margin: 8px 0;
   }
 
   .cutscene-actor {

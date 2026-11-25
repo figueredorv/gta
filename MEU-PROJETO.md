@@ -10,6 +10,8 @@
 Figueiredo, Fátima Micaella, Camilla, Davi e nomes de ruas de Aracaju.
 Quem concluiu o primeiro capítulo pode atualizar a página e usar **Continuar
 (Missão 2)** para iniciar a nova investigação com o progresso preservado.
+Código de Resgate é a única campanha disponível na abertura. Ruan e Fátima têm
+arte personalizada de corpo inteiro e sprites do mapa baseados nas fotos fornecidas.
 
 - Local: http://127.0.0.1:8080/?story=codigo-de-resgate
 - Online: https://figueredorv.github.io/gta/?story=codigo-de-resgate

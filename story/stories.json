@@ -6,13 +6,6 @@
       "description": "Capítulos 1 e 2 jogáveis — Seja Ruan Figueiredo, siga as pistas de Fátima Micaella e investigue o computador da feira.",
       "cover": "./story/codigo-de-resgate/assets/capa.svg?v=2",
       "path": "./story/codigo-de-resgate"
-    },
-    {
-      "id": "vibe-coding",
-      "title": "GTA: Missão Vibe Coding",
-      "description": "Cruzando a cidade para descobrir o segredo guardado em uma caixa secreta e lidando com GPUs, servidores e robôs!",
-      "cover": "./story/vibe-coding/splash/splash-start.png",
-      "path": "./story/vibe-coding"
     }
   ]
 }
