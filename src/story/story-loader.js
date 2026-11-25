@@ -11,7 +11,7 @@ import {
   validateAssetPath,
   StoryParseError,
   parseStoryCatalog,
-} from './story-parser.js?v=17';
+} from './story-parser.js?v=18';
 
 async function fetchText(url, label, options = {}) {
   const { forceReload = false, signal = null } = options;
@@ -641,6 +641,8 @@ export async function loadStoryPackage(basePath = './story', cityMap = null, opt
     splashUrl: withBust(splashUrl),
     faviconUrl: withBust(faviconUrl),
     protagonist,
+    completionTitle: manifest.completionTitle || '',
+    completionMessage: manifest.completionMessage || '',
     npcLines,
     wrongItemLines,
     characters,

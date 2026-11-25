@@ -26,6 +26,8 @@ test('carrega o capítulo de resgate com personagens, entrega, cenários e nomes
   const city = new CityMap();
   const story = await loadStoryPackage(base, city);
   assert.equal(story.protagonist, 'ruan');
+  assert.equal(story.completionTitle, 'CAPÍTULO 1 CONCLUÍDO');
+  assert.match(story.completionMessage, /Fátima ainda aguarda resgate/);
   assert.equal(story.characters.get('ruan').name, 'Ruan Figueiredo');
   assert.equal(story.characters.get('fatima').name, 'Fátima Micaella');
   assert.match(story.characters.get('ruan').profile, /Programador/);

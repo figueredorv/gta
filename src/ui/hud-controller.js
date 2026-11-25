@@ -285,11 +285,11 @@ export class HudController {
     this.setStartSelection(0);
   }
 
-  showMissionComplete(missionTitle, hasNextMission, onContinue) {
-    this.missionCompleteTitleEl.textContent = hasNextMission ? 'MISSÃO CONCLUÍDA' : 'HISTÓRIA CONCLUÍDA';
+  showMissionComplete(missionTitle, hasNextMission, onContinue, completion = {}) {
+    this.missionCompleteTitleEl.textContent = hasNextMission ? 'MISSÃO CONCLUÍDA' : (completion.title || 'HISTÓRIA CONCLUÍDA');
     this.missionCompleteSubtitleEl.textContent = hasNextMission
       ? `${missionTitle} finalizada. Prepare-se para a próxima missão.`
-      : `${missionTitle} finalizada! Todas as missões foram concluídas. Modo exploração livre ativado.`;
+      : (completion.message || `${missionTitle} finalizada! Todas as missões foram concluídas. Modo exploração livre ativado.`);
     this.missionCompleteBtn.textContent = hasNextMission ? 'Próxima Missão' : 'Explorar Livremente';
     this.missionCompleteHandler = onContinue;
     this.missionCompleteScreen.classList.remove('hidden');

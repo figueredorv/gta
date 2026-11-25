@@ -1003,6 +1003,9 @@ export class Engine {
           this.setObjective(null);
           this.#persistSaveState();
         }
+      }, {
+        title: this.storyPackage.completionTitle,
+        message: this.storyPackage.completionMessage,
       });
     };
 

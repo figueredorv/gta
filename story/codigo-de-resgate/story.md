@@ -4,6 +4,8 @@ page_title: Código de Resgate — Ruan e Fátima
 subtitle: Capítulo 1 — Uma mensagem interrompida. Um pendrive desaparecido. A primeira pista para encontrar Fátima.
 splash: assets/capa.svg
 protagonist: ruan
+completion_title: CAPÍTULO 1 CONCLUÍDO
+completion_message: Você recuperou o pendrive e encontrou a primeira pista. Fátima ainda aguarda resgate. Os próximos capítulos chegam em uma futura atualização; por enquanto, explore Aracaju ou repita a missão pelo menu.
 characters: ruan, fatima, lia, caio, admin
 items: pendrive-feira, caneca-ruan
 collectibles: caneca-ruan @ CASA-001 (normal)

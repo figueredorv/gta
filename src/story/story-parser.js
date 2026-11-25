@@ -140,6 +140,8 @@ export function parseStoryManifest(rawText, fileName = 'story.md') {
     subtitle: meta.subtitle || '',
     splash: validateAssetPath(meta.splash || '', fileName, 2),
     protagonist,
+    completionTitle: meta.completion_title || '',
+    completionMessage: meta.completion_message || '',
     characters,
     missions,
     items,
