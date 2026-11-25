@@ -1,6 +1,6 @@
 > **Sua cópia:** [jogar online](https://figueredorv.github.io/gta/) · [guia local, publicação e personalização](./MEU-PROJETO.md). No Windows, abra `JOGAR-LOCAL.bat` e acesse http://127.0.0.1:8080/.
 
-> **Nova campanha:** [Aracaju: Código de Resgate — capítulo 1](https://figueredorv.github.io/gta/?story=codigo-de-resgate). Jogue como Ruan Figueiredo e siga a primeira pista de Fátima Micaella. [Detalhes e próximos capítulos](./story/codigo-de-resgate/README.md).
+> **Campanha personalizada:** [Aracaju: Código de Resgate — capítulos 1 e 2](https://figueredorv.github.io/gta/?story=codigo-de-resgate). Jogue como Ruan Figueiredo, siga as pistas de Fátima Micaella e investigue o computador da feira com Davi. [Detalhes e próximos capítulos](./story/codigo-de-resgate/README.md).
 
 > **Desenvolvimento desta versão e da campanha personalizada:** Ruan Figueiredo. A documentação original abaixo registra a origem do projeto utilizado como base.
 

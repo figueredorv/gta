@@ -1,4 +1,4 @@
-import { Engine } from './core/engine.js?v=61';
+import { Engine } from './core/engine.js?v=62';
 import { renderAuthorCredit } from './version.js?v=4';
 import { HudController } from './ui/hud-controller.js?v=42';
 import { CutsceneController } from './ui/cutscene-controller.js?v=15';
@@ -11,8 +11,9 @@ import { CityMap } from './world/city-map.js?v=30';
 import {
   loadGameState,
   clearGameState,
-  formatContinueLabel
-} from './core/save-state.js?v=2';
+  formatContinueLabel,
+  getNewMissionIndex
+} from './core/save-state.js?v=3';
 import {
   loadStoryCatalog,
   shouldShowStorySelector,
@@ -61,7 +62,7 @@ async function boot() {
     const storyKey = getStoryKey();
     savedState = loadGameState(storyKey);
     hud.setStartButtonState({
-      label: formatContinueLabel(savedState),
+      label: formatContinueLabel(savedState, storyPackage?.missions?.length),
       hasSave: Boolean(savedState)
     });
   };
@@ -120,9 +121,9 @@ async function boot() {
     });
 
     refreshStartButtons();
-    const targetMissionIndex = savedState
+    const targetMissionIndex = getNewMissionIndex(savedState, storyPackage.missions.length) ?? (savedState
       ? Math.max(0, Math.min(savedState.currentMissionIndex || 0, Math.max(0, (storyPackage.missions?.length || 1) - 1)))
-      : 0;
+      : 0);
     const missionLabel = `Missão ${targetMissionIndex + 1}`;
 
     hud.setStartLoadingProgress(65, `Pré-carregando imagens da ${missionLabel} e itens extras...`, { ready: false });

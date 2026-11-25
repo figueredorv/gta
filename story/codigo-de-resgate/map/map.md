@@ -858,7 +858,7 @@ COM-751: Perfumaria Vitória
 
 ## Casas
 CASA-001: Apartamento de Ruan Figueiredo
-CASA-002: Casa do Mauro
+CASA-002: Casa de Mauro — antigo funcionário da escola
 CASA-003: Casa do Mauro Santos
 CASA-004: Casa do Silva Santos
 CASA-005: Casa do Oliveira Santos

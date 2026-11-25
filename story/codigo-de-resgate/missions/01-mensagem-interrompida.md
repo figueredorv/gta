@@ -15,7 +15,7 @@ wrong_item_message: Esse não é o pendrive da feira. Confira o nome do item na 
 ## CUTSCENE_INICIO
 left: ruan
 right: fatima
-bg: Frente do [CASA-001]
+bg: Apartamento de Ruan Figueiredo
 
 - Narrador: Aracaju, fim de tarde. Ruan Figueiredo está terminando mais um projeto quando uma mensagem de Fátima Micaella interrompe o silêncio.
 - Ruan Figueiredo: Fátima? Você já saiu da escola? Separei aquele exemplo de programação para a sua turma.
@@ -34,7 +34,7 @@ bg: Frente do [CASA-001]
 ## CUTSCENE_FIM
 left: ruan
 right: camilla
-bg: Interior do [COM-001]
+bg: Ateliê da Feira — Camilla
 
 - Camilla: Ruan! Conseguiu encontrar o pendrive com a fita amarela?
 - Ruan Figueiredo: Consegui. Se Fátima deixou uma mensagem ali, vamos encontrá-la.
@@ -45,5 +45,5 @@ bg: Interior do [COM-001]
 - Ruan Figueiredo: E o arquivo foi alterado por alguém chamado Admin. É o mesmo apelido mencionado no áudio encaminhado pela direção.
 - Camilla: Então a assistência é nossa próxima pista. Já enviei uma cópia dessas informações à direção. Você não está sozinho nessa.
 - Ruan Figueiredo: Aguenta firme, Fátima. Já encontrei o começo do caminho.
-- Narrador: CAPÍTULO 1 CONCLUÍDO — Você recuperou o pendrive e identificou a assistência técnica. Fátima ainda precisa ser resgatada. O capítulo 2, "Um café e uma pista", será a próxima etapa desta aventura.
-- Narrador: Por enquanto, explore a cidade, converse com Caio no [COM-003] ou repita este capítulo pelo menu de pausa. As próximas cinco missões ainda estão em desenvolvimento.
+- Narrador: CAPÍTULO 1 CONCLUÍDO — Você recuperou o pendrive e identificou a assistência técnica. Fátima ainda precisa ser resgatada. O capítulo 2, "Um café e uma pista", é a próxima etapa desta aventura.
+- Narrador: Na próxima tela, escolha "Próxima Missão" para continuar a investigação. Camilla está entrando em contato com o técnico responsável pelo computador da feira.

@@ -166,8 +166,18 @@ export function clearGameState(storyKeyOrStorage = 'default', maybeStorage = und
   }
 }
 
-export function formatContinueLabel(savedState) {
+export function getNewMissionIndex(savedState, missionCount = 0) {
+  if (!savedState?.freeRoamMode) return null;
+  const completedIndex = savedState.currentMissionIndex;
+  if (!Number.isInteger(completedIndex) || completedIndex < 0) return null;
+  if (!Number.isInteger(missionCount) || completedIndex + 1 >= missionCount) return null;
+  return completedIndex + 1;
+}
+
+export function formatContinueLabel(savedState, missionCount = 0) {
   if (!savedState) return 'Entrar na Cidade';
+  const newMissionIndex = getNewMissionIndex(savedState, missionCount);
+  if (newMissionIndex !== null) return `Continuar (Missão ${newMissionIndex + 1})`;
   if (savedState.freeRoamMode) {
     return 'Continuar (Modo Livre)';
   }

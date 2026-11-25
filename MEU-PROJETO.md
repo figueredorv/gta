@@ -6,8 +6,10 @@
 
 ## Campanha personalizada
 
-**Aracaju: Código de Resgate** já tem o primeiro capítulo jogável, com Ruan
-Figueiredo, Fátima Micaella e nomes de ruas de Aracaju.
+**Aracaju: Código de Resgate** já tem os capítulos 1 e 2 jogáveis, com Ruan
+Figueiredo, Fátima Micaella, Camilla, Davi e nomes de ruas de Aracaju.
+Quem concluiu o primeiro capítulo pode atualizar a página e usar **Continuar
+(Missão 2)** para iniciar a nova investigação com o progresso preservado.
 
 - Local: http://127.0.0.1:8080/?story=codigo-de-resgate
 - Online: https://figueredorv.github.io/gta/?story=codigo-de-resgate

@@ -9,7 +9,7 @@ roof_color: #0f766e
 ## CUTSCENE
 left: ruan
 right: caio
-bg: Interior do [COM-003]
+bg: Café Ponto de Encontro
 
 - Caio: Você é o Ruan? A professora Micaella falou de você na feira. Disse que programar é aprender a fazer perguntas melhores.
 - Ruan Figueiredo: Ela precisa da nossa ajuda agora. Você viu alguma coisa?

@@ -25,7 +25,7 @@ import {
 } from '../physics/vehicle-physics.js?v=18';
 import { Minimap } from '../ui/minimap.js?v=27';
 import { Inventory } from './inventory.js?v=20';
-import { createSaveSnapshot, saveGameState } from './save-state.js?v=2';
+import { createSaveSnapshot, saveGameState, getNewMissionIndex } from './save-state.js?v=3';
 import { getPendingMissionAssetUrls, preloadMissionAssets } from '../story/story-loader.js';
 
 const PEDESTRIAN_CHAT_LINES = [
@@ -303,6 +303,7 @@ export class Engine {
       return this.startMission(0);
     }
 
+    const newMissionIndex = getNewMissionIndex(savedState, this.storyPackage.missions.length);
     const clamped = Math.max(
       0,
       Math.min(savedState.currentMissionIndex || 0, this.storyPackage.missions.length - 1),
@@ -374,6 +375,12 @@ export class Engine {
       this.camera.x = this.player.x;
       this.camera.y = this.player.y;
       this.#syncActiveChunks(this.player.x, this.player.y);
+    }
+
+    // Um save em modo livre concluiu a versão anterior da campanha.
+    // Restaura itens e posição antes de iniciar o primeiro capítulo adicionado.
+    if (newMissionIndex !== null) {
+      return this.startMission(newMissionIndex, { preserveState: true });
     }
 
     this.pauseMenu?.configure(this.storyPackage.missions, clamped, {

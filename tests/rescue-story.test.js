@@ -9,7 +9,7 @@ import { loadStoryPackage } from '../src/story/story-loader.js';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const base = './story/codigo-de-resgate';
 
-test('carrega o capítulo de resgate com personagens, entrega, cenários e nomes para todas as vias', async (t) => {
+test('carrega os dois capítulos de resgate com entregas, cenários e nomes para todas as vias', async (t) => {
   // Exercita o carregador real, incluindo resolução de imagens e referências.
   // Somente o transporte HTTP é substituído pelo acesso ao pacote no disco.
   const originalFetch = globalThis.fetch;
@@ -26,11 +26,12 @@ test('carrega o capítulo de resgate com personagens, entrega, cenários e nomes
   const city = new CityMap();
   const story = await loadStoryPackage(base, city);
   assert.equal(story.protagonist, 'ruan');
-  assert.equal(story.completionTitle, 'CAPÍTULO 1 CONCLUÍDO');
+  assert.equal(story.completionTitle, 'CAPÍTULO 2 CONCLUÍDO');
   assert.match(story.completionMessage, /Fátima ainda aguarda resgate/);
   assert.equal(story.characters.get('ruan').name, 'Ruan Figueiredo');
   assert.equal(story.characters.get('fatima').name, 'Fátima Micaella');
   assert.equal(story.characters.get('camilla').name, 'Camilla');
+  assert.equal(story.characters.get('davi').name, 'Davi');
   assert.match(story.characters.get('ruan').profile, /Programador/);
   for (const character of story.characters.values()) {
     for (const [view, url] of Object.entries(character.sprites)) {
@@ -38,7 +39,7 @@ test('carrega o capítulo de resgate com personagens, entrega, cenários e nomes
       assert.ok(fs.existsSync(path.resolve(root, url)), url);
     }
   }
-  assert.ok(story.splashUrl.endsWith('/assets/capa.svg'));
+  assert.ok(story.splashUrl.endsWith('/assets/capa.svg?v=2'));
   const streets = [...city.locationsByCode.keys()].filter(code => code.startsWith('RUA-'));
   assert.equal(streets.length, 62);
   assert.equal(new Set(streets.map(code => story.locationNames.get(code))).size, 62);
@@ -48,7 +49,7 @@ test('carrega o capítulo de resgate com personagens, entrega, cenários e nomes
   assert.equal(story.locationNames.get('RUA-001'), 'Rua São Cristóvão');
   assert.equal(story.locationNames.get('RUA-034'), 'Rua Nossa Senhora de Fátima');
 
-  assert.equal(story.missions.length, 1);
+  assert.equal(story.missions.length, 2);
   const mission = story.missions[0];
   assert.equal(mission.pickupLocation, 'PRACA-001');
   assert.equal(mission.targetLocation, 'COM-001');
@@ -56,12 +57,27 @@ test('carrega o capítulo de resgate com personagens, entrega, cenários e nomes
   assert.equal(mission.requireItem, mission.giveItem);
   assert.ok(mission.outroCutscene.steps.some(step => step.type === 'deliver' && step.itemId === mission.requireItem));
   assert.ok(mission.outroCutscene.steps.some(step => /Fátima ainda precisa ser resgatada/.test(step.text)));
-  for (const cutscene of [mission.introCutscene, mission.outroCutscene]) {
-    assert.ok(cutscene.backgroundImage, 'Cenário não resolvido');
-    for (const step of cutscene.steps) {
-      assert.doesNotMatch(step.text || '', /\[(?:ITEM-|CASA-|COM-|PRACA-|RUA-)/, 'Referência de texto não resolvida');
+  for (const chapter of story.missions) {
+    assert.ok(story.items.get(chapter.giveItem)?.imageUrl, 'Imagem do item de missão ausente');
+    assert.equal(chapter.requireItem, chapter.giveItem);
+    assert.ok(chapter.outroCutscene.steps.some(step => step.type === 'deliver' && step.itemId === chapter.requireItem));
+    for (const cutscene of [chapter.introCutscene, chapter.outroCutscene]) {
+      assert.ok(cutscene.backgroundImage, 'Cenário não resolvido');
+      for (const step of cutscene.steps) {
+        assert.doesNotMatch(step.text || '', /\[(?:ITEM-|CASA-|COM-|PRACA-|RUA-)/, 'Referência de texto não resolvida');
+      }
     }
   }
+  const investigation = story.missions[1];
+  assert.equal(investigation.id, '02-um-cafe-e-uma-pista');
+  assert.equal(investigation.startLocation, mission.targetLocation);
+  assert.equal(investigation.pickupLocation, 'COM-003');
+  assert.equal(investigation.targetLocation, 'COM-002');
+  assert.equal(investigation.requireItem, 'modulo-diagnostico');
+  assert.notEqual(investigation.requireItem, mission.requireItem);
+  assert.equal(investigation.outroCutscene.rightChar, 'davi');
+  assert.ok(investigation.outroCutscene.steps.some(step => /antiga sala de informática/.test(step.text)));
+  assert.ok(investigation.outroCutscene.steps.some(step => /Fátima ainda precisa ser resgatada/.test(step.text)));
   assert.match(mission.objective, /Camilla/);
   assert.equal(mission.outroCutscene.rightChar, 'camilla');
   assert.equal(story.extraItems[0].id, 'caneca-ruan');

@@ -8,6 +8,7 @@ import {
   loadGameState,
   clearGameState,
   formatContinueLabel,
+  getNewMissionIndex,
 } from '../src/core/save-state.js';
 
 function createMemoryStorage() {
@@ -57,6 +58,34 @@ test('formatContinueLabel exibe missão atual ou modo livre', () => {
   assert.equal(formatContinueLabel(null), 'Entrar na Cidade');
   assert.equal(formatContinueLabel({ currentMissionIndex: 1, freeRoamMode: false }), 'Continuar (Missão 2)');
   assert.equal(formatContinueLabel({ currentMissionIndex: 4, freeRoamMode: true }), 'Continuar (Modo Livre)');
+});
+
+test('oferece o novo capítulo a quem concluiu a versão anterior, preservando o save', () => {
+  const storage = createMemoryStorage();
+  const completedChapter = createSaveSnapshot({
+    storyKey: 'codigo-de-resgate',
+    currentMissionIndex: 0,
+    freeRoamMode: true,
+    inventorySlots: [{ id: 'caneca-ruan', name: 'Caneca do Ruan', category: 'extra' }],
+    collectedExtraIds: ['caneca-ruan'],
+    player: { x: 228, y: 317, health: 87 },
+  });
+  saveGameState(completedChapter, storage);
+  const loaded = loadGameState('codigo-de-resgate', storage);
+  const before = JSON.stringify(loaded);
+  assert.equal(getNewMissionIndex(loaded, 2), 1);
+  assert.equal(formatContinueLabel(loaded, 2), 'Continuar (Missão 2)');
+  assert.equal(JSON.stringify(loaded), before);
+  assert.equal(loaded.inventorySlots[0].id, 'caneca-ruan');
+  assert.equal(loaded.player.health, 87);
+
+  assert.equal(getNewMissionIndex(loaded, 1), null);
+  assert.equal(formatContinueLabel(loaded, 1), 'Continuar (Modo Livre)');
+  assert.equal(getNewMissionIndex({ ...loaded, freeRoamMode: false }, 2), null);
+  assert.equal(formatContinueLabel({ ...loaded, freeRoamMode: false }, 2), 'Continuar (Missão 1)');
+  assert.equal(getNewMissionIndex({ ...loaded, currentMissionIndex: 1 }, 2), null);
+  assert.equal(getNewMissionIndex(null, 2), null);
+  assert.equal(getNewMissionIndex({ ...loaded, currentMissionIndex: -1 }, 2), null);
 });
 
 test('persiste missões desbloqueadas e mantém apenas a primeira missão no novo jogo', () => {

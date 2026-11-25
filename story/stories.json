@@ -3,8 +3,8 @@
     {
       "id": "codigo-de-resgate",
       "title": "Aracaju: Código de Resgate",
-      "description": "Capítulo 1 jogável — Seja Ruan Figueiredo e siga a primeira pista para resgatar a professora Fátima Micaella.",
-      "cover": "./story/codigo-de-resgate/assets/capa.svg",
+      "description": "Capítulos 1 e 2 jogáveis — Seja Ruan Figueiredo, siga as pistas de Fátima Micaella e investigue o computador da feira.",
+      "cover": "./story/codigo-de-resgate/assets/capa.svg?v=2",
       "path": "./story/codigo-de-resgate"
     },
     {
