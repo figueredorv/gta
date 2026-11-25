@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 96 128" fill="none"><title>Lia — visão superior</title><desc>Personagem sem braços. Canvas e escala de exportação compatíveis com a vista frontal. Fundo transparente.</desc><defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 96 128" fill="none"><title>Camilla — visão superior</title><desc>Personagem sem braços. Canvas e escala de exportação compatíveis com a vista frontal. Fundo transparente.</desc><defs>
     <linearGradient id="skin" x1="34" y1="19" x2="61" y2="47" gradientUnits="userSpaceOnUse">
       <stop stop-color="#FFE0AC" /><stop offset=".6" stop-color="#F1C27D" /><stop offset="1" stop-color="#DFA061" />
     </linearGradient>

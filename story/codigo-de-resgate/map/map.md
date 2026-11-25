@@ -104,7 +104,7 @@ PRACA-035: Praça Boa Viagem
 PRACA-036: Praça do Farol
 
 ## Comércios
-COM-001: Ateliê da Feira — Lia
+COM-001: Ateliê da Feira — Camilla
 COM-002: Assistência Técnica Ponto de Restauração
 COM-003: Café Ponto de Encontro
 COM-004: Mercadinho Bom Preço

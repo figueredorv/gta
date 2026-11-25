@@ -9,14 +9,14 @@ Primeira versão jogável: capítulo 1, **Mensagem interrompida**.
 - Também disponível na seleção de histórias da abertura.
 
 Ruan Figueiredo recebe o áudio de Fátima Micaella no apartamento, busca o
-Pendrive da Feira na praça e o leva para Lia no Ateliê da Feira. A entrega revela
+Pendrive da Feira na praça e o leva para Camilla no Ateliê da Feira. A entrega revela
 uma assistência técnica e encerra o primeiro capítulo. Fátima ainda não foi
 resgatada nesta versão. O menu de pausa permite repetir a missão.
 
 WASD/setas movimentam, M abre o mapa, Espaço interage e I abre o inventário.
-Siga os avisos na tela e entre a pé no comércio para falar com Lia.
+Siga os avisos na tela e entre a pé no comércio para falar com Camilla.
 Caio pode ser encontrado no Café Ponto de Encontro, numa conversa opcional.
-A Caneca do Ruan é um colecionável opcional e não serve para entregar a Lia.
+A Caneca do Ruan é um colecionável opcional e não serve para entregar a Camilla.
 
 ## Próximos capítulos planejados
 

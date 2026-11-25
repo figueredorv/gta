@@ -3,16 +3,16 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { APP_VERSION, AUTHOR_INSTAGRAM_URL, formatStartCredit, renderAuthorCredit } from '../src/version.js';
+import { APP_VERSION, AUTHOR_URL, formatStartCredit, renderAuthorCredit } from '../src/version.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(__dirname, '..');
 
 test('formatStartCredit exibe autoria, ano 2026 e a versão atual do sistema', () => {
   const text = formatStartCredit();
-  assert.ok(text.includes('Desenvolvido por Gustavo Guanabara em 2026'));
+  assert.ok(text.includes('Desenvolvido por Ruan Figueiredo em 2026'));
   assert.ok(text.includes(APP_VERSION));
-  assert.equal(AUTHOR_INSTAGRAM_URL, 'https://www.instagram.com/gustavoguanabara/');
+  assert.equal(AUTHOR_URL, 'https://github.com/figueredorv');
 
   const readme = fs.readFileSync(path.join(appRoot, 'README.md'), 'utf8');
   const match = readme.match(/^###\s+`(v\d+\.\d+(?:\.\d+)?)`/m);
@@ -20,7 +20,7 @@ test('formatStartCredit exibe autoria, ano 2026 e a versão atual do sistema', (
   assert.equal(APP_VERSION, match[1], 'APP_VERSION deve acompanhar a versão mais recente definida em README.md');
 });
 
-test('renderAuthorCredit monta o texto com link do Instagram em nova aba', () => {
+test('renderAuthorCredit monta o crédito de Ruan com link do GitHub em nova aba', () => {
   const appended = [];
   const makeNode = (type, value = '') => ({
     type,
@@ -44,8 +44,8 @@ test('renderAuthorCredit monta o texto com link do Instagram em nova aba', () =>
   assert.equal(appended.length, 3);
   assert.equal(appended[0].textContent, 'Desenvolvido por ');
   assert.equal(appended[1].type, 'a');
-  assert.equal(appended[1].textContent, 'Gustavo Guanabara');
-  assert.equal(appended[1].href, AUTHOR_INSTAGRAM_URL);
+  assert.equal(appended[1].textContent, 'Ruan Figueiredo');
+  assert.equal(appended[1].href, AUTHOR_URL);
   assert.equal(appended[1].target, '_blank');
   assert.equal(appended[2].textContent, ` em 2026 — ${APP_VERSION}`);
 });

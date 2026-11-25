@@ -30,6 +30,7 @@ test('carrega o capítulo de resgate com personagens, entrega, cenários e nomes
   assert.match(story.completionMessage, /Fátima ainda aguarda resgate/);
   assert.equal(story.characters.get('ruan').name, 'Ruan Figueiredo');
   assert.equal(story.characters.get('fatima').name, 'Fátima Micaella');
+  assert.equal(story.characters.get('camilla').name, 'Camilla');
   assert.match(story.characters.get('ruan').profile, /Programador/);
   for (const character of story.characters.values()) {
     for (const [view, url] of Object.entries(character.sprites)) {
@@ -61,7 +62,8 @@ test('carrega o capítulo de resgate com personagens, entrega, cenários e nomes
       assert.doesNotMatch(step.text || '', /\[(?:ITEM-|CASA-|COM-|PRACA-|RUA-)/, 'Referência de texto não resolvida');
     }
   }
-  assert.match(mission.objective, /Lia/);
+  assert.match(mission.objective, /Camilla/);
+  assert.equal(mission.outroCutscene.rightChar, 'camilla');
   assert.equal(story.extraItems[0].id, 'caneca-ruan');
   assert.notEqual(story.extraItems[0].id, mission.requireItem);
   assert.equal(story.encounters[0].npc, 'caio');

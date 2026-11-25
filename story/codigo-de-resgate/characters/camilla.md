@@ -1,6 +1,6 @@
 ---
-id: lia
-name: Lia
+id: camilla
+name: Camilla
 profile: Colega de Fátima e organizadora da feira de tecnologia. Ajuda Ruan a preservar as pistas e mantém contato com a direção.
 traits: Prestativa, organizada, atenta
 skin_color: #f1c27d

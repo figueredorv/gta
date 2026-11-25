@@ -6,7 +6,7 @@ splash: assets/capa.svg
 protagonist: ruan
 completion_title: CAPÍTULO 1 CONCLUÍDO
 completion_message: Você recuperou o pendrive e encontrou a primeira pista. Fátima ainda aguarda resgate. Os próximos capítulos chegam em uma futura atualização; por enquanto, explore Aracaju ou repita a missão pelo menu.
-characters: ruan, fatima, lia, caio, admin
+characters: ruan, fatima, camilla, caio, admin
 items: pendrive-feira, caneca-ruan
 collectibles: caneca-ruan @ CASA-001 (normal)
 missions: 01-mensagem-interrompida
